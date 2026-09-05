@@ -104,7 +104,7 @@ class PublicationGateTest extends TestCase
 
         config([
             'company.registered_address' => null,
-            'company.registration_number' => null,
+            'company.parent.registration_number' => null,
         ]);
 
         $this->get(route('home'))->assertOk()->assertSee('Gate G-07');
@@ -116,7 +116,7 @@ class PublicationGateTest extends TestCase
 
         config([
             'company.registered_address' => 'Kenyatta Street, Eldoret',
-            'company.registration_number' => 'PVT-ABC1234',
+            'company.parent.registration_number' => 'PVT-ABC1234',
             'company.email.enquiries' => 'enquiries@example.test',
         ]);
 

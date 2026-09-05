@@ -52,9 +52,23 @@
                 </ul>
             </div>
 
+            <div class="note">
+                <span class="note__tag">Entity note</span>
+                <p>
+                    {{ $platform->title }} is operated by {{ config('company.parent.name') }}, the holding
+                    company. It is a sibling of this division — not its parent, and not work delivered
+                    through our client practice. We reference it because we are accountable for running it.
+                </p>
+            </div>
+
             <div class="btn-row">
+                @if ($platform->external_url)
+                    <a class="btn btn--secondary" href="{{ $platform->external_url }}" rel="noopener" target="_blank">
+                        {{ $platform->external_label ?? 'Visit the platform' }}
+                    </a>
+                @endif
                 <a class="btn btn--primary" href="{{ route('rfp.create') }}">Request the platform briefing under NDA</a>
-                <a class="btn btn--secondary" href="{{ route('services.index') }}">The disciplines behind it</a>
+                <a class="btn btn--ghost" href="{{ route('services.index') }}">The disciplines behind it</a>
             </div>
         </div>
     </section>

@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="stack">
+                <div class="stack" id="group">
                     <h2 class="display-3">The group</h2>
                     <p class="prose-body measure">
                         {{ config('company.parent_name') }} is a holding company with operating interests

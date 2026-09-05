@@ -3,21 +3,50 @@
 /*
 | Corporate identity used across the site chrome.
 |
-| Publication gate G-07 (JTS-WEB-IA-001 section 4): the registered office, company
-| registration number and a named contact route are mandatory before launch. Their
-| absence is a documented disqualifier in institutional and public-sector vendor
-| screening. Values resolve from the environment so they can differ per deployment.
+| Three distinct entities, deliberately kept apart:
+|
+|   Jiranisoko Market Ltd          the holding company (PVT-YQ195JQY)
+|   ├── Jiranisoko Tech Solutions  this site, the enterprise technology division
+|   └── JiraniSoko Marketplace     the consumer marketplace at jiranisoko.com
+|
+| The marketplace is a sibling platform, not the parent. Linking the holding
+| company's name to the marketplace sends a procurement reviewer who clicked
+| "Investor & Group" to a consumer classifieds app, which is why `parent_url`
+| and `marketplace_url` are separate settings and neither falls back to the other.
 */
 
 return [
 
     'legal_name' => env('COMPANY_LEGAL_NAME', 'Jiranisoko Tech Solutions'),
-    'parent_name' => env('COMPANY_PARENT_NAME', 'Jiranisoko Market Ltd'),
-    'parent_url' => env('COMPANY_PARENT_URL', 'https://jiranisoko.com'),
     'division_line' => 'A division of '.env('COMPANY_PARENT_NAME', 'Jiranisoko Market Ltd'),
 
+    /*
+    | The holding company. `parent_url` is the holding company's own corporate site.
+    | Leave it unset until one exists — the group link then resolves to this site's
+    | own group page rather than pointing somewhere that is not the holding company.
+    */
+    'parent' => [
+        'name' => env('COMPANY_PARENT_NAME', 'Jiranisoko Market Ltd'),
+        'url' => env('COMPANY_PARENT_URL'),
+        'registration_number' => env('COMPANY_PARENT_REGISTRATION_NUMBER', 'PVT-YQ195JQY'),
+        'incorporated_on' => env('COMPANY_PARENT_INCORPORATED_ON', '2026-03-30'),
+        'jurisdiction' => 'Republic of Kenya, Companies Act 2015',
+    ],
+
+    /*
+    | Sibling platform operated by the group. Referenced as evidence that we operate
+    | systems rather than only build them. It is not the parent and must never be
+    | linked as such.
+    */
+    'marketplace' => [
+        'name' => env('COMPANY_MARKETPLACE_NAME', 'JiraniSoko Marketplace'),
+        'url' => env('COMPANY_MARKETPLACE_URL', 'https://jiranisoko.com'),
+    ],
+
+    // Kept for templates that only need the parent's display name.
+    'parent_name' => env('COMPANY_PARENT_NAME', 'Jiranisoko Market Ltd'),
+
     'registered_address' => env('COMPANY_REGISTERED_ADDRESS'),
-    'registration_number' => env('COMPANY_REGISTRATION_NUMBER'),
 
     'city' => env('COMPANY_CITY', 'Eldoret'),
     'country' => env('COMPANY_COUNTRY', 'Kenya'),

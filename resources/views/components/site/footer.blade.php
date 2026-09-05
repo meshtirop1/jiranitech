@@ -15,19 +15,29 @@
                 <div class="footer__identity">
                     <p>The enterprise technology division of {{ config('company.parent_name') }}.</p>
 
+                    {{--
+                        The division is not separately incorporated. State the holding
+                        company's registration explicitly rather than letting the number sit
+                        under this site's name, which would imply a legal entity that does
+                        not exist and will not survive a vendor-registry check.
+                    --}}
+                    <p>
+                        Registered as
+                        <strong>{{ config('company.parent.name') }}</strong>,
+                        company no.
+                        @if (config('company.parent.registration_number'))
+                            {{ config('company.parent.registration_number') }}
+                        @else
+                            <span class="pending">Gate G-07 — not configured</span>
+                        @endif
+                        <br>
+                        <span class="muted small">{{ config('company.parent.jurisdiction') }}</span>
+                    </p>
+
                     <p>
                         Registered office:
                         @if (config('company.registered_address'))
                             {{ config('company.registered_address') }}
-                        @else
-                            <span class="pending">Gate G-07 — not configured</span>
-                        @endif
-                    </p>
-
-                    <p>
-                        Company registration:
-                        @if (config('company.registration_number'))
-                            {{ config('company.registration_number') }}
                         @else
                             <span class="pending">Gate G-07 — not configured</span>
                         @endif
@@ -76,7 +86,8 @@
                     <li><a href="{{ route('company.leadership') }}">Leadership</a></li>
                     <li><a href="{{ route('company.careers') }}">Careers</a></li>
                     <li><a href="{{ route('insights.index') }}">Insights</a></li>
-                    <li><a href="{{ config('company.parent_url') }}" rel="noopener">{{ config('company.parent_name') }}</a></li>
+                    <li><x-site.group-link /></li>
+                    <li><a href="{{ route('platforms.index') }}">Group platforms</a></li>
                 </ul>
             </div>
         </div>

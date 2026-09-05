@@ -226,7 +226,7 @@ class PillarSeeder extends Seeder
                 [
                     'slug' => 'auction-trading-engines',
                     'title' => 'Real-Time Auction & Trading Engine Platforms',
-                    'executive_summary' => 'Bidding and matching systems where correctness under contention is the entire engineering problem. Our group operates an auction platform in production, so our treatment of race conditions, bid ordering and settlement finality comes from systems we are accountable for rather than from reference architecture.',
+                    'executive_summary' => 'Bidding and matching systems where correctness under contention is the entire engineering problem. Our group operates a marketplace carrying live payment rails and real concurrency, so our treatment of race conditions, idempotency and settlement finality comes from systems we are accountable for rather than from reference architecture.',
                     'outcomes' => ['Bid ordering that is deterministic and defensible in a dispute', 'Auction close handled correctly under concurrent final-second bidding', 'Latency measured and reported at the ninety-ninth percentile', 'A settlement record that reconciles to the payment ledger'],
                     'capabilities' => ['Matching and bid engine design', 'Concurrency, locking and idempotency architecture', 'Real-time distribution over WebSocket and server-sent events', 'Anti-sniping, reserve and proxy bidding logic', 'Settlement, escrow and payout integration'],
                     'stack' => ['.NET', 'Laravel', 'Redis', 'PostgreSQL', 'Apache Kafka', 'WebSocket'],

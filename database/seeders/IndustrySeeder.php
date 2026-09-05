@@ -57,7 +57,7 @@ class IndustrySeeder extends Seeder
                     'Fraud and abuse that adapt faster than static rules can respond',
                     'Catalogue and search performance under seasonal demand spikes',
                 ],
-                'regulatory_notes' => 'Consumer protection obligations, transaction record retention, and merchant settlement terms. This is the sector Jiranisoko Marketplace operates in, so our reference architecture here is drawn from a system the group is accountable for.',
+                'regulatory_notes' => 'Consumer protection obligations, transaction record retention, and merchant settlement terms. This is the sector JiraniSoko Marketplace operates in, so our reference architecture here is drawn from a system the group is accountable for.',
             ],
             [
                 'slug' => 'high-growth-ventures',

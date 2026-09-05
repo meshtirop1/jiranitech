@@ -20,6 +20,8 @@ class PlatformReference extends Model
         'scale_metrics',
         'stack',
         'operating_since',
+        'external_url',
+        'external_label',
         'cleared_for_disclosure',
         'sort_order',
     ];

@@ -81,8 +81,9 @@
                         {{ config('company.legal_name') }} is the technology division of
                         {{ config('company.parent_name') }}, a holding company with operating interests
                         across multiple digital verticals. Chief among them is
-                        <strong>Jiranisoko Marketplace</strong> — a commerce and auction platform carrying
-                        live payment rails, live fraud exposure and a live uptime obligation to real merchants.
+                        <strong>{{ config('company.marketplace.name') }}</strong> — a consumer marketplace carrying
+                        live M-Pesa payment rails, live fraud exposure and a live uptime obligation to the
+                        people trading on it.
                     </p>
                     <p class="prose-body measure">
                         This distinction matters to any institution evaluating an engineering partner. A

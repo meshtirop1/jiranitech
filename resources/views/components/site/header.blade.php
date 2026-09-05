@@ -16,7 +16,7 @@
             @if (config('company.client_portal_url'))
                 <a href="{{ config('company.client_portal_url') }}" rel="noopener">Client Portal</a>
             @endif
-            <a href="{{ config('company.parent_url') }}" rel="noopener">Investor &amp; Group</a>
+            <x-site.group-link label="Investor & Group" />
         </div>
     </div>
 </div>
