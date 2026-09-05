@@ -1,0 +1,37 @@
+{
+  "_fonts-wdn8KNUl.css": {
+    "file": "assets/fonts-wdn8KNUl.css",
+    "src": "_fonts-wdn8KNUl.css"
+  },
+  "_pt-sans-400-normal-Cwy9XeGQ.woff2": {
+    "file": "assets/pt-sans-400-normal-Cwy9XeGQ.woff2",
+    "src": "_pt-sans-400-normal-Cwy9XeGQ.woff2"
+  },
+  "_pt-sans-400-normal-v0jdzXSm.woff": {
+    "file": "assets/pt-sans-400-normal-v0jdzXSm.woff",
+    "src": "_pt-sans-400-normal-v0jdzXSm.woff"
+  },
+  "_pt-sans-700-normal-CyjbL83V.woff": {
+    "file": "assets/pt-sans-700-normal-CyjbL83V.woff",
+    "src": "_pt-sans-700-normal-CyjbL83V.woff"
+  },
+  "_pt-sans-700-normal-DmHhLLdt.woff2": {
+    "file": "assets/pt-sans-700-normal-DmHhLLdt.woff2",
+    "src": "_pt-sans-700-normal-DmHhLLdt.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-D7Iq2g0t.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-D96YrAAL.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

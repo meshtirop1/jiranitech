@@ -1,0 +1,34 @@
+# =============================================================================
+# Defence in depth for cPanel deployments.
+#
+# In a correct deployment this file is never consulted: the domain's document root
+# points at public/, and everything here sits above it and is unreachable by URL.
+#
+# It exists for the deployment that goes wrong. The most common cPanel mistake is
+# uploading the entire Laravel application into public_html, which puts .env,
+# storage/logs and the whole source tree on the public web. If that happens, this
+# file denies the damage rather than letting credentials be fetched over HTTP.
+#
+# Do not treat it as a substitute for pointing the document root at public/.
+# =============================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Anything that resolves inside the application root is redirected into the
+    # front controller instead of being served as a file.
+    RewriteRule ^(?!public/)(.*)$ public/$1 [L,NC]
+</IfModule>
+
+# Environment files, keys and dependency manifests.
+<FilesMatch "^(\.env.*|\.htpasswd|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|vite\.config\.js|.*\.md|.*\.sqlite|.*\.log|\.gitignore|\.gitattributes|\.editorconfig)$">
+    Require all denied
+</FilesMatch>
+
+# Directories that must never be web-readable.
+RedirectMatch 404 ^/(storage|bootstrap|config|database|resources|routes|tests|vendor|app|node_modules)(/|$)
+
+# Dotfiles and version control metadata.
+RedirectMatch 404 /\.(git|svn|hg|idea|vscode|claude)(/|$)
+
+Options -Indexes
