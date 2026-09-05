@@ -146,6 +146,13 @@ class LinkIntegrityTest extends TestCase
                 continue;
             }
 
+            // The console is not part of the public site. Its own routes redirect by
+            // design — /admin/login sends you to /admin/setup until an administrator
+            // exists — and AdminConsoleTest covers them properly.
+            if (str_starts_with((string) $route->getName(), 'admin.')) {
+                continue;
+            }
+
             $this->get('/'.ltrim($route->uri(), '/'))
                 ->assertOk("Named route {$route->getName()} did not respond.");
         }

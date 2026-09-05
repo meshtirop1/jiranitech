@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EngagementModelController;
@@ -72,4 +73,55 @@ Route::prefix('legal')->name('legal.')->group(function () {
     Route::get('/data-processing-addendum', [LegalController::class, 'dataProcessing'])->name('data-processing');
     Route::get('/responsible-disclosure', [LegalController::class, 'disclosure'])->name('disclosure');
     Route::get('/accessibility-statement', [LegalController::class, 'accessibility'])->name('accessibility');
+});
+
+/*
+| Admin console.
+|
+| The host has no shell, so the first administrator is created through a setup route
+| that closes permanently once any admin exists. Everything else sits behind auth plus
+| an is_admin check.
+*/
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/setup', [Admin\SetupController::class, 'create'])->name('setup');
+    Route::post('/setup', [Admin\SetupController::class, 'store'])->name('setup.store');
+
+    Route::get('/login', [Admin\SessionController::class, 'create'])->name('login');
+    Route::post('/login', [Admin\SessionController::class, 'store'])
+        ->middleware('throttle:5,1')
+        ->name('login.store');
+    Route::post('/logout', [Admin\SessionController::class, 'destroy'])->name('logout');
+
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/', Admin\DashboardController::class)->name('dashboard');
+
+        Route::get('/settings', [Admin\SettingsController::class, 'edit'])->name('settings.edit');
+        Route::put('/settings', [Admin\SettingsController::class, 'update'])->name('settings.update');
+
+        Route::get('/metrics', [Admin\MetricController::class, 'index'])->name('metrics.index');
+        Route::put('/metrics/{metric}', [Admin\MetricController::class, 'update'])->name('metrics.update');
+
+        Route::get('/compliance', [Admin\ComplianceClaimController::class, 'index'])->name('compliance.index');
+        Route::put('/compliance/{compliance}', [Admin\ComplianceClaimController::class, 'update'])->name('compliance.update');
+
+        Route::get('/platforms', [Admin\PlatformReferenceController::class, 'index'])->name('platforms.index');
+        Route::put('/platforms/{platform}', [Admin\PlatformReferenceController::class, 'update'])->name('platforms.update');
+
+        Route::get('/insights', [Admin\InsightController::class, 'index'])->name('insights.index');
+        Route::get('/insights/create', [Admin\InsightController::class, 'create'])->name('insights.create');
+        Route::post('/insights', [Admin\InsightController::class, 'store'])->name('insights.store');
+        Route::get('/insights/{insight}/edit', [Admin\InsightController::class, 'edit'])->name('insights.edit');
+        Route::put('/insights/{insight}', [Admin\InsightController::class, 'update'])->name('insights.update');
+        Route::delete('/insights/{insight}', [Admin\InsightController::class, 'destroy'])->name('insights.destroy');
+
+        Route::get('/team', [Admin\TeamMemberController::class, 'index'])->name('team.index');
+        Route::put('/team/{team}', [Admin\TeamMemberController::class, 'update'])->name('team.update');
+
+        Route::get('/jobs', [Admin\JobOpeningController::class, 'index'])->name('jobs.index');
+        Route::put('/jobs/{job}', [Admin\JobOpeningController::class, 'update'])->name('jobs.update');
+
+        Route::get('/rfp', [Admin\RfpInboxController::class, 'index'])->name('rfp.index');
+        Route::get('/rfp/{rfp}', [Admin\RfpInboxController::class, 'show'])->name('rfp.show');
+        Route::put('/rfp/{rfp}/acknowledge', [Admin\RfpInboxController::class, 'acknowledge'])->name('rfp.acknowledge');
+    });
 });

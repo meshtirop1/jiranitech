@@ -6,6 +6,7 @@ use App\Models\EngagementModel;
 use App\Models\Industry;
 use App\Models\Pillar;
 use App\Models\PlatformReference;
+use App\Support\SiteSettings;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View as ViewInstance;
@@ -19,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        SiteSettings::applyToConfig();
+
         $this->composeSiteNavigation();
     }
 
