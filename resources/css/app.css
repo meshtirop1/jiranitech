@@ -24,19 +24,32 @@
     --surface-2: #e6ebe6;
     --ink: #111a16;
     --ink-2: #3b4a44;
-    --muted: #697871;
+    --muted: #5c6b64;
     --rule: #cdd6ce;
     --rule-strong: #a6b3a9;
     --pine: #0e5c45;
     --pine-ink: #0a4433;
     --pine-soft: #dbe9e2;
     --pine-contrast: #ffffff;
-    --brass: #8e6520;
+    --brass: #855d1d;
     --brass-soft: #efe6d3;
     --clay: #8e2f1f;
     --clay-soft: #f6e2dc;
     --clay-contrast: #ffffff;
     --code-bg: #e7ece8;
+
+    /* Surfaces that are dark in BOTH themes. These must not be built from
+       --ink or --pine-ink, which invert: doing so put white text on a light
+       mint hero in dark mode. */
+    /* Boundary of interactive controls. WCAG 2.2 SC 1.4.11 requires 3:1 against
+       the adjacent surface, and the field fill is near-identical to it, so the
+       border carries the whole job. --rule-strong is too light to qualify. */
+    --field-border: #7d8b83;
+
+    --utility-ground: #111a16;
+    --utility-ink: #eff2ee;
+    --hero-ground: #0a4433;
+    --hero-ink: #ffffff;
 
     --measure: 66ch;
     --gutter: clamp(1.25rem, 4vw, 3.5rem);
@@ -63,6 +76,11 @@
         --clay-soft: #331a14;
         --clay-contrast: #1d0b07;
         --code-bg: #16231e;
+        --field-border: #6b8479;
+        --utility-ground: #060c0a;
+        --utility-ink: #b3c1ba;
+        --hero-ground: #0b2c22;
+        --hero-ink: #eaf5ef;
     }
 }
 
@@ -85,6 +103,11 @@
     --clay-soft: #331a14;
     --clay-contrast: #1d0b07;
     --code-bg: #16231e;
+    --field-border: #6b8479;
+    --utility-ground: #060c0a;
+    --utility-ink: #b3c1ba;
+    --hero-ground: #0b2c22;
+    --hero-ink: #eaf5ef;
 }
 
 /* --------------------------------------------------------------- base --- */
@@ -333,8 +356,8 @@ a {
 /* ------------------------------------------------------------ header --- */
 
 .utility {
-    background: var(--ink);
-    color: var(--ground);
+    background: var(--utility-ground);
+    color: var(--utility-ink);
     font-size: 0.78rem;
 }
 
@@ -348,7 +371,7 @@ a {
 }
 
 .utility a {
-    color: var(--ground);
+    color: var(--utility-ink);
     text-decoration: none;
     opacity: 0.82;
 }
@@ -1188,7 +1211,7 @@ table.data td.num {
     font-size: 0.92rem;
     color: var(--ink);
     background: var(--ground);
-    border: 1px solid var(--rule-strong);
+    border: 1px solid var(--field-border);
     padding: 0.65rem 0.75rem;
 }
 
@@ -1220,7 +1243,7 @@ table.data td.num {
     display: flex;
     gap: 0.7rem;
     align-items: flex-start;
-    border: 1px solid var(--rule-strong);
+    border: 1px solid var(--field-border);
     background: var(--ground);
     padding: 0.9rem 1rem;
     cursor: pointer;
@@ -1450,8 +1473,8 @@ table.data td.num {
 
 .pagehero {
     position: relative;
-    background: var(--pine-ink);
-    color: #fff;
+    background: var(--hero-ground);
+    color: var(--hero-ink);
     padding-block: clamp(3.5rem, 8vw, 6rem);
     overflow: hidden;
 }
@@ -1461,7 +1484,7 @@ table.data td.num {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(140deg, color-mix(in srgb, var(--pine) 55%, transparent) 0%, transparent 62%),
+        linear-gradient(140deg, rgba(120, 205, 170, 0.16) 0%, transparent 62%),
         repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 64px),
         repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 64px);
     pointer-events: none;
@@ -1486,19 +1509,19 @@ table.data td.num {
     font-size: 0.6875rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: color-mix(in srgb, #fff 66%, transparent);
+    color: color-mix(in srgb, var(--hero-ink) 66%, transparent);
     margin: 0;
 }
 
 .pagehero h1 {
-    color: #fff;
+    color: var(--hero-ink);
     font-size: clamp(1.9rem, 4.4vw, 2.9rem);
     letter-spacing: -0.02em;
     margin: 0;
 }
 
 .pagehero__sub {
-    color: color-mix(in srgb, #fff 84%, transparent);
+    color: color-mix(in srgb, var(--hero-ink) 84%, transparent);
     font-size: 1rem;
     line-height: 1.6;
     margin: 0;
