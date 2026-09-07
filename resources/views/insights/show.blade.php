@@ -1,6 +1,10 @@
 {{-- Template T-10 — article. --}}
 
-<x-layouts.app :title="$insight->title" :description="$insight->abstract_line">
+<x-layouts.app
+    :title="$insight->title"
+    :description="$insight->abstract_line"
+    :schema="[\App\Support\StructuredData::article($insight)]"
+>
     <x-site.page-header
         :eyebrow="$insight->format->label()"
         :heading="$insight->title"

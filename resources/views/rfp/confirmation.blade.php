@@ -1,6 +1,8 @@
 {{-- Template T-14 — intake confirmation. --}}
 
-<x-layouts.app title="Request received">
+{{-- Reached only through a signed, single-use URL. It names the sender's
+     organisation and their reference, so it is kept out of every index. --}}
+<x-layouts.app title="Request received" :noindex="true">
     <x-site.page-header
         eyebrow="Request received"
         :heading="'Your reference is '.$submission->reference"

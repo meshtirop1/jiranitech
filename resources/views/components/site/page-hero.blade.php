@@ -52,6 +52,11 @@
                     @endforeach
                 </ol>
             </nav>
+
+            {{-- Machine-readable copy of the same trail. See page-header. --}}
+            <script type="application/ld+json">{!! \App\Support\StructuredData::graph([
+                \App\Support\StructuredData::breadcrumbs($crumbs),
+            ]) !!}</script>
         </div>
     </div>
 @endif

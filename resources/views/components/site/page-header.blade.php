@@ -22,6 +22,13 @@
                     @endforeach
                 </ol>
             </nav>
+
+            {{-- The machine-readable copy of the trail above. Emitted here rather than
+                 from each page so the two can never disagree: there is one crumb list,
+                 and both the reader's version and the crawler's are rendered from it. --}}
+            <script type="application/ld+json">{!! \App\Support\StructuredData::graph([
+                \App\Support\StructuredData::breadcrumbs($crumbs),
+            ]) !!}</script>
         @endif
 
         <div class="section-head" style="margin-bottom:0">

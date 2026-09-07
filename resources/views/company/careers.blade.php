@@ -12,6 +12,7 @@
 <x-layouts.app
     title="Careers"
     description="Engineering roles at Jiranisoko Tech Solutions in Eldoret, Kenya. Principal and senior engineers building systems for banks, government agencies and high-growth ventures."
+    :schema="\App\Support\StructuredData::jobPostings($openings)"
 >
     <x-site.page-hero
         eyebrow="Company"

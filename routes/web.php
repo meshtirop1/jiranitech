@@ -11,7 +11,9 @@ use App\Http\Controllers\LegalController;
 use App\Http\Controllers\PillarController;
 use App\Http\Controllers\PlatformReferenceController;
 use App\Http\Controllers\RfpSubmissionController;
+use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', HomeController::class)->name('home');
+
+// Crawler-facing files. Generated rather than static so neither can outlive a
+// change of domain, as public/robots.txt did.
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/robots.txt', RobotsController::class)->name('robots');
 
 // Capability taxonomy. Depth from home to any leaf is three clicks.
 Route::get('/services', [PillarController::class, 'index'])->name('services.index');
