@@ -38,7 +38,7 @@
                         Reviews @if ($queue > 0)<span class="erp__count">{{ $queue }}</span>@endif
                     </a>
 
-                    @if (auth()->user()->erpRole()?->administersDelivery())
+                    @if (auth()->user()->erpRole()?->enrolsPeople())
                         <a href="{{ route('erp.people.index') }}" @class(['erp__navlink', 'is-current' => request()->routeIs('erp.people.*')])>People</a>
                     @endif
                 </nav>

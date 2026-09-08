@@ -3,7 +3,7 @@
 <x-layouts.erp title="Projects">
     <div class="erp__head">
         <div><h1>Projects</h1><p class="erp__sub">Progress is computed from task state, never entered by hand.</p></div>
-        @if (auth()->user()->erpRole()?->administersDelivery())
+        @if (auth()->user()->erpRole()?->opensProjects())
             <a class="erp__btn" href="{{ route('erp.projects.create') }}">Open a project</a>
         @endif
     </div>

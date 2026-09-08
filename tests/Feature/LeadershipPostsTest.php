@@ -69,6 +69,26 @@ class LeadershipPostsTest extends TestCase
         }
     }
 
+    /**
+     * The navigation has to ask the same question the route asks. A practice
+     * lead allowed through the middleware but never shown the link is allowed
+     * in theory only.
+     */
+    public function test_the_navigation_offers_people_to_everyone_who_may_enrol(): void
+    {
+        $link = route('erp.people.index');
+
+        $this->actingAs($this->person(ErpRole::PracticeLead))
+            ->get(route('erp.dashboard'))
+            ->assertOk()
+            ->assertSee($link);
+
+        $this->actingAs($this->person(ErpRole::Engineer))
+            ->get(route('erp.dashboard'))
+            ->assertOk()
+            ->assertDontSee($link);
+    }
+
     public function test_an_engineer_cannot_reach_the_people_page(): void
     {
         $this->actingAs($this->person(ErpRole::Engineer))

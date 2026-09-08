@@ -143,12 +143,6 @@ enum ErpRole: string
         return $this !== self::DataProtectionOfficer;
     }
 
-    /** Kept for the middleware alias and older call sites. */
-    public function administersDelivery(): bool
-    {
-        return $this->opensProjects();
-    }
-
     /**
      * The discipline titles offered when enrolling a practice lead, so the three
      * posts on the leadership page can be filled exactly.
