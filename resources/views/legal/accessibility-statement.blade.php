@@ -33,13 +33,16 @@
                     </div>
                 </div>
 
-                <div class="note note--gate">
-                    <span class="note__tag">Assessment outstanding</span>
+                <div class="note">
+                    <span class="note__tag">How this was assessed</span>
                     <p>
-                        This statement describes the accessibility measures built into the site. It has not yet
-                        been verified by an independent audit or by testing with assistive technology users.
-                        Commission that assessment, record its date and findings here, and list any known
-                        non-conformances before treating this statement as a conformance claim.
+                        The measures above were verified by our own testing, including automated contrast and
+                        structure checks that run as part of our build and fail it on a regression. They have
+                        <strong>not</strong> yet been verified by an independent audit or by testing with
+                        assistive technology users, so this is a statement of the measures in place rather than
+                        a certified conformance claim. We would rather say that than imply an audit we have not
+                        had. Last reviewed
+                        {{ \Illuminate\Support\Carbon::parse(config('legal.accessibility.reviewed_on'))->format('j F Y') }}.
                     </p>
                 </div>
 

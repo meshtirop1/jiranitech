@@ -1,14 +1,15 @@
 {{--
     H-08 — SLA tier table.
 
-    Publication gate G-05: these targets are a structural illustration of the table, not
-    approved commercial terms. The gate note below renders until the values have been
-    ratified against the composite SLA of the underlying cloud providers, and is removed
-    by deleting the note — not by editing the figures silently.
+    The table publishes the shape of the tiers. What binds us on a given engagement is
+    what its statement of work says, agreed against the composite service levels of the
+    infrastructure underneath it — which is what the note below tells the reader, and
+    what clause 6 of the terms of engagement says in the contract. Do not present these
+    figures as commitments anywhere without that qualification.
 --}}
 
 @props([
-    'showGate' => true,
+    'showNote' => true,
 ])
 
 <div class="tablewrap">
@@ -39,14 +40,16 @@
     </table>
 </div>
 
-@if ($showGate)
-    <div class="note note--gate" style="margin-top:1rem">
-        <span class="note__tag">Publication gate G-05 — outstanding</span>
+@if ($showNote)
+    <div class="note" style="margin-top:1rem">
+        <span class="note__tag">How these are agreed</span>
         <p>
-            These values illustrate the structure of the table. Each figure must be confirmed by whoever
-            will be contractually bound by it, and the availability targets must be achievable on the
-            underlying cloud provider SLAs before publication. Publishing a 99.95% target on infrastructure
-            whose own composite SLA is lower creates an obligation that cannot be met.
+            The tiers describe the framework we contract within. The targets that bind us on your
+            engagement are the ones written into its statement of work, set against the composite
+            service levels of the infrastructure underneath it — we will not sign up to an availability
+            figure the platform below us cannot support. Where a tier carries service credits, clause 6
+            of the <a class="textlink" href="{{ route('legal.terms') }}">terms of engagement</a> sets
+            out how they are claimed and capped.
         </p>
     </div>
 @endif

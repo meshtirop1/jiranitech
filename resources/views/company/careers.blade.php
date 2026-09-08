@@ -253,15 +253,6 @@
             @endif
 
             @if ($draftCount > 0)
-                <div class="note note--gate" style="margin-top:1.5rem">
-                    <span class="note__tag">Publication gate G-10 — {{ $draftCount }} listing(s) held back</span>
-                    <p>
-                        {{ $draftCount }} role definition(s) are seeded but unpublished, so they do not appear
-                        above. Each is a realistic description of a role this firm would hire for, not a
-                        confirmed vacancy. Confirm the role is open and funded, set <code>posted_at</code>,
-                        then set <code>is_published</code> on the <code>job_openings</code> row.
-                    </p>
-                </div>
             @endif
         </div>
     </section>

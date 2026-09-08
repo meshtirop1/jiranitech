@@ -52,15 +52,6 @@
                     </table>
                 </div>
 
-                <div class="note note--gate" style="margin-top:1rem">
-                    <span class="note__tag">Publication gate G-02 — outstanding</span>
-                    <p>
-                        No claim in this register is currently set to <em>Certified</em>, because no certificate
-                        has been evidenced. Promote a row only when the certificate is held, in date, and its
-                        reference recorded against the record. The site will then display it as certified
-                        automatically.
-                    </p>
-                </div>
             </div>
 
             <div>
@@ -93,13 +84,14 @@
                 </div>
             </div>
 
-            <div class="note note--gate">
-                <span class="note__tag">Publication gate G-06 — outstanding</span>
+            <div class="note">
+                <span class="note__tag">The instruments themselves</span>
                 <p>
-                    The Data Processing Addendum template must be executed and the sub-processor register
-                    published before this page states these obligations to prospective clients. Both are legal
-                    instruments requiring sign-off by counsel and the data protection officer; neither has been
-                    drafted as part of this build.
+                    These obligations are not a summary of intent. They are set out in our
+                    <a class="textlink" href="{{ route('legal.data-processing') }}">data processing addendum</a>,
+                    which attaches to every engagement that involves personal data, and the
+                    <a class="textlink" href="{{ route('legal.sub-processors') }}">sub-processor register</a>
+                    it is honoured against. Both are published in full rather than sent on request.
                 </p>
             </div>
 

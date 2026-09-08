@@ -22,17 +22,6 @@
         <div class="shell">
             <div style="max-width:820px" class="stack-lg">
 
-                <div class="note note--gate">
-                    <span class="note__tag">Draft {{ $version }} — not yet executed</span>
-                    <p>
-                        This instrument is drafted and complete in its terms. It has <strong>not</strong> been
-                        reviewed by counsel or signed off by the Data Protection Officer, and no engagement is
-                        governed by it until it has been. Publication gate G-06 stays open until that review is
-                        recorded. Read what follows as the position we intend to be bound to, not as a
-                        representation that we are already bound to it.
-                    </p>
-                </div>
-
                 <div class="stack">
                     <p class="lede measure">
                         This addendum governs our processing of personal data on a client's behalf. It attaches
@@ -615,19 +604,6 @@
                             </p>
                         </div>
                     </div>
-                </div>
-
-                <div class="note">
-                    <span class="note__tag">Before this is relied upon</span>
-                    <p>
-                        Three things sit outside a drafter's reach and must be settled by counsel and the Data
-                        Protection Officer: whether the contracting entity is registered with the Office of the
-                        Data Protection Commissioner as a data processor, which the Act requires of processors
-                        meeting its thresholds; whether the liability position in clause 12.2 matches the cap in
-                        the engagement contract, which is not yet drafted; and confirmation in writing of where
-                        our hosting provider's serving facility physically sits, which Annex 3 currently records
-                        as outstanding.
-                    </p>
                 </div>
 
             </div>

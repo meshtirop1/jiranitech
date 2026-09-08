@@ -103,12 +103,13 @@ class DataProcessingAddendumTest extends TestCase
         );
     }
 
-    public function test_a_draft_says_so_on_its_face(): void
+    public function test_it_says_when_it_takes_effect(): void
     {
+        // Published standard terms have to say what makes them bite, or a reader
+        // cannot tell whether they are already bound by them.
         $this->assertSays(
             route('legal.data-processing'),
-            'not yet executed',
-            'no engagement is governed by it',
+            'takes effect on signature by both parties',
         );
     }
 

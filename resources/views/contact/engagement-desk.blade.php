@@ -13,36 +13,24 @@
         <div class="shell">
             <div style="max-width:820px" class="stack-lg">
                 <div class="deflist">
-                    <div class="deflist__row">
-                        <dt>Email</dt>
-                        <dd>
-                            @if (config('company.email.enquiries'))
-                                <a href="mailto:{{ config('company.email.enquiries') }}">{{ config('company.email.enquiries') }}</a>
-                            @else
-                                <span class="pending">Gate G-07 — enquiries address not configured</span>
-                            @endif
-                        </dd>
-                    </div>
-                    <div class="deflist__row">
-                        <dt>Telephone</dt>
-                        <dd>
-                            @if (config('company.telephone'))
-                                {{ config('company.telephone') }}
-                            @else
-                                <span class="pending">Gate G-07 — telephone not configured</span>
-                            @endif
-                        </dd>
-                    </div>
-                    <div class="deflist__row">
-                        <dt>Registered office</dt>
-                        <dd>
-                            @if (config('company.registered_address'))
-                                {{ config('company.registered_address') }}, {{ config('company.city') }}, {{ config('company.country') }}
-                            @else
-                                <span class="pending">Gate G-07 — registered address not configured</span>
-                            @endif
-                        </dd>
-                    </div>
+                    @if (config('company.email.enquiries'))
+                        <div class="deflist__row">
+                            <dt>Email</dt>
+                            <dd><a href="mailto:{{ config('company.email.enquiries') }}">{{ config('company.email.enquiries') }}</a></dd>
+                        </div>
+                    @endif
+                    @if (config('company.telephone'))
+                        <div class="deflist__row">
+                            <dt>Telephone</dt>
+                            <dd>{{ config('company.telephone') }}</dd>
+                        </div>
+                    @endif
+                    @if (config('company.registered_address'))
+                        <div class="deflist__row">
+                            <dt>Registered office</dt>
+                            <dd>{{ config('company.registered_address') }}, {{ config('company.city') }}, {{ config('company.country') }}</dd>
+                        </div>
+                    @endif
                     <div class="deflist__row">
                         <dt>Office hours</dt>
                         <dd>{{ config('company.office_hours') }}</dd>

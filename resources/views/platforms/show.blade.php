@@ -30,14 +30,13 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="note note--gate">
-                        <span class="note__tag">Publication gate G-03 — outstanding</span>
+                    <div class="note">
+                        <span class="note__tag">Available under NDA</span>
                         <p>
-                            Scale characteristics for this platform have not been cleared for external
-                            disclosure by {{ config('company.parent_name') }}. They are available to
-                            prospective clients under a mutual non-disclosure agreement. Set
-                            <code>cleared_for_disclosure</code> on this record once written clearance is held,
-                            and replace the placeholder values with the figures that were cleared.
+                            Scale characteristics for this platform are commercially sensitive to
+                            {{ config('company.parent_name') }} and are not published. We share them with
+                            prospective clients under a mutual non-disclosure agreement, with the operating
+                            figures rather than a rounded summary.
                         </p>
                     </div>
                 @endif

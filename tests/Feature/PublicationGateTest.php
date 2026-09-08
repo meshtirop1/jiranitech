@@ -78,7 +78,10 @@ class PublicationGateTest extends TestCase
 
         $this->get(route('platforms.show', $platform))
             ->assertOk()
-            ->assertSee('Publication gate G-03')
+            // Suppression is the guarantee; the reader gets the client-facing
+            // half of the same fact, not the internal one.
+            ->assertSee('Available under NDA')
+            ->assertDontSee('Publication gate')
             ->assertDontSee('Registered merchants');
     }
 
@@ -95,11 +98,15 @@ class PublicationGateTest extends TestCase
         $this->get(route('platforms.show', $platform))
             ->assertOk()
             ->assertSee('Registered merchants')
-            ->assertDontSee('Publication gate G-03');
+            ->assertDontSee('Available under NDA');
     }
 
-    public function test_g07_footer_flags_missing_corporate_identity(): void
+    public function test_g07_missing_corporate_identity_is_omitted_not_flagged_at_visitors(): void
     {
+        // The footer used to print the name of the open gate at whoever was
+        // reading. A visitor cannot act on that and should not have to see it,
+        // so an unset value now drops its line. The gate still reports the gap
+        // in the admin console, which is the only place it is any use.
         $this->seed();
 
         config([
@@ -107,7 +114,11 @@ class PublicationGateTest extends TestCase
             'company.parent.registration_number' => null,
         ]);
 
-        $this->get(route('home'))->assertOk()->assertSee('Gate G-07');
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertDontSee('Gate G-07')
+            ->assertDontSee('not configured')
+            ->assertDontSee('Registered office:');
     }
 
     public function test_g07_footer_shows_corporate_identity_once_configured(): void

@@ -129,16 +129,6 @@
             @endif
 
             @if ($pendingAppointments > 0)
-                <div class="note note--gate" style="margin-top:1.5rem">
-                    <span class="note__tag">Publication gate G-09 — {{ $pendingAppointments }} of {{ $leadership->count() }} outstanding</span>
-                    <p>
-                        These posts exist and their accountabilities are real, but no appointee has been
-                        recorded against them. Supply a name and photograph for each, with that person's
-                        consent to external publication, before launch — procurement reviewers verify the
-                        names on this page. Set <code>name</code> and <code>photo_path</code> on the
-                        <code>team_members</code> row; the card layout does not change.
-                    </p>
-                </div>
             @endif
         </div>
     </section>

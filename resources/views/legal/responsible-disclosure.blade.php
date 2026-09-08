@@ -19,7 +19,7 @@
                         @if (config('company.email.security'))
                             <a href="mailto:{{ config('company.email.security') }}">{{ config('company.email.security') }}</a>
                         @else
-                            <span class="pending">Gate G-07 — security address not configured</span>
+                            <a class="textlink" href="{{ route('contact.engagement-desk') }}">the engagement desk</a>
                         @endif
                         with enough detail to reproduce the issue: the affected system, the steps taken, and the
                         impact you believe it has. Proof-of-concept code is welcome. Please do not include third

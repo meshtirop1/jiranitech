@@ -42,7 +42,9 @@ class CompanyPageTest extends TestCase
         $this->get(route('company.leadership'))
             ->assertOk()
             ->assertSee('Appointment to be announced')
-            ->assertSee('Publication gate G-09 — 8 of 8 outstanding', escape: false);
+            // The card carries the vacancy; the reader is never shown the name
+            // of the internal gate that is tracking it.
+            ->assertDontSee('Publication gate');
     }
 
     public function test_g09_the_gate_note_clears_once_every_post_is_filled(): void
@@ -68,7 +70,7 @@ class CompanyPageTest extends TestCase
         $this->get(route('company.careers'))
             ->assertOk()
             ->assertSee('No advertised vacancies right now')
-            ->assertSee('Publication gate G-10 — 4 listing(s) held back', escape: false)
+            ->assertDontSee('Publication gate')
             ->assertDontSee('Senior Payments Engineer');
     }
 
@@ -86,7 +88,7 @@ class CompanyPageTest extends TestCase
             ->assertSee('Senior Payments Engineer')
             ->assertSee('Hybrid — three days on site', escape: false)
             ->assertDontSee('No advertised vacancies right now')
-            ->assertSee('Publication gate G-10 — 3 listing(s) held back', escape: false);
+            ->assertDontSee('Publication gate');
     }
 
     public function test_the_careers_page_renders_the_devcom_section_sequence(): void

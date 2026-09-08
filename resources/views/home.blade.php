@@ -248,15 +248,6 @@
 
                 <x-figures.timezone-overlap />
 
-                <div class="note note--gate">
-                    <span class="note__tag">Publication gate G-04 — outstanding</span>
-                    <p>
-                        Advantage 01 currently states a cost advantage without a figure, because no comparison
-                        basis has been supplied. Before launch, either publish the rate differential with its
-                        basis (role, region, period) recorded against the metric, or leave the qualitative
-                        statement as written. Do not publish a percentage without the basis behind it.
-                    </p>
-                </div>
             </div>
         </div>
     </section>

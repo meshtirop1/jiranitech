@@ -16,8 +16,43 @@
 
 return [
 
+    /*
+    | Commercial variables quoted in the terms of engagement.
+    |
+    | They live here rather than in the prose so that one edit governs every
+    | place the site states them, and so that changing a commercial position is
+    | a reviewed, dated commit rather than a search-and-replace through a legal
+    | document. Every figure here is a promise to a client: change it knowing
+    | that the published terms change with it.
+    */
+    'terms' => [
+        'version' => '1.0',
+        'effective_on' => '2026-09-09',
+
+        'payment_days' => 30,
+        'late_interest_percent' => 2,          // per month, on overdue sums
+        'warranty_days' => 90,                 // defect correction after acceptance
+        'minimum_term_days' => 90,             // dedicated team engagements
+        'scale_down_notice_days' => 30,
+        'termination_notice_days' => 60,
+        'service_credit_cap_percent' => 10,    // of the monthly service charge
+        'liability_cap_months' => 12,          // charges paid in the preceding period
+        'non_solicitation_months' => 12,
+    ],
+
+    'privacy' => [
+        'version' => '1.0',
+        'effective_on' => '2026-09-09',
+    ],
+
+    'accessibility' => [
+        'standard' => 'WCAG 2.2 Level AA',
+        'reviewed_on' => '2026-09-09',
+        'independently_audited' => false,
+    ],
+
     'dpa' => [
-        'version' => 'Draft 1.0',
+        'version' => '1.0',
         'effective_on' => '2026-09-09',
 
         /*

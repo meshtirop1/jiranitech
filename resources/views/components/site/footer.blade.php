@@ -23,12 +23,8 @@
                     --}}
                     <p>
                         Registered as
-                        <strong>{{ config('company.parent.name') }}</strong>,
-                        company no.
-                        @if (config('company.parent.registration_number'))
-                            {{ config('company.parent.registration_number') }}
-                        @else
-                            <span class="pending">Gate G-07 — not configured</span>
+                        <strong>{{ config('company.parent.name') }}</strong>@if (config('company.parent.registration_number')),
+                            company no. {{ config('company.parent.registration_number') }}
                         @endif
                         @if (config('company.parent.tax_pin'))
                             &middot; KRA PIN {{ config('company.parent.tax_pin') }}
@@ -37,18 +33,16 @@
                         <span class="muted small">{{ config('company.parent.jurisdiction') }}</span>
                     </p>
 
-                    <p>
-                        Registered office:
-                        @if (config('company.registered_address'))
+                    @if (config('company.registered_address'))
+                        <p>
+                            Registered office:
                             {{ collect([
                                 config('company.registered_address'),
                                 config('company.city'),
                                 config('company.country'),
                             ])->filter()->implode(', ') }}
-                        @else
-                            <span class="pending">Gate G-07 — not configured</span>
-                        @endif
-                    </p>
+                        </p>
+                    @endif
 
                     @if (config('company.postal_address'))
                         <p>Postal address: {{ config('company.postal_address') }}</p>
@@ -57,8 +51,6 @@
                     <p>
                         @if (config('company.email.enquiries'))
                             <a href="mailto:{{ config('company.email.enquiries') }}">{{ config('company.email.enquiries') }}</a>
-                        @else
-                            <span class="pending">Gate G-07 — enquiries address not configured</span>
                         @endif
                         @if (config('company.telephone'))
                             &middot; {{ config('company.telephone') }}
