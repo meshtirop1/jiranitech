@@ -30,6 +30,12 @@ Route::middleware(['auth', 'delivery'])->group(function () {
 
     Route::get('/reviews', [Erp\ReviewController::class, 'index'])->name('reviews.index');
 
+    // The worked example. Who may load it is decided in the controller, because
+    // the answer is a state of the whole division rather than a role: it is
+    // offered only while nobody is in charge, and refuses everyone afterwards.
+    Route::post('/demonstration', [Erp\DemoDataController::class, 'store'])->name('demo.store');
+    Route::delete('/demonstration', [Erp\DemoDataController::class, 'destroy'])->name('demo.destroy');
+
     // Opening an engagement is a directors' right.
     Route::middleware('delivery.director')->group(function () {
         Route::get('/projects-new', [Erp\ProjectController::class, 'create'])->name('projects.create');

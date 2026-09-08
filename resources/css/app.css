@@ -2908,6 +2908,21 @@ table.data td.num {
     border-left: 3px solid var(--negative);
 }
 
+/* A row of choices that are alternatives to one another. Each may be a link or
+   its own form, so the row spaces the children rather than the children
+   spacing themselves. */
+.erp__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 14px 0 4px;
+}
+
+.erp__actions form {
+    margin: 0;
+}
+
 .erp__split {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 340px;

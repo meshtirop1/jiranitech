@@ -16,6 +16,51 @@
         </div>
     </div>
 
+    @if ($mayPlantExample)
+        {{-- The division is empty and this account is standing in as its first
+             leader. An empty board shows none of the gates or the review traffic,
+             so offer a worked example to judge the workflow against. --}}
+        <section class="erp__panel erp__panel--attention">
+            <h2>Nothing has been enrolled yet</h2>
+            <p class="erp__sub">
+                You are signed in as the standing-in Managing Director, which is what happens while
+                the division has nobody in charge of it. Two ways forward.
+            </p>
+
+            <div class="erp__actions">
+                <a class="erp__btn" href="{{ route('erp.people.index') }}">Enrol the real team</a>
+
+                <form method="POST" action="{{ route('erp.demo.store') }}">
+                    @csrf
+                    <button type="submit" class="erp__btn erp__btn--ghost">Load a worked example</button>
+                </form>
+            </div>
+
+            <p class="erp__muted">
+                The example plants three engagements, thirteen accounts covering every published post,
+                and tasks in each state, so the review gates and the progress arithmetic can be seen
+                running. It is marked as a demonstration throughout and can be cleared in one action.
+                Loading it appoints a Managing Director, which ends your standing-in access — you carry
+                on with the demonstration accounts.
+            </p>
+        </section>
+    @endif
+
+    @if ($mayClearExample)
+        <section class="erp__panel">
+            <h2>Demonstration data is loaded</h2>
+            <p class="erp__sub">
+                Everything on the <code>{{ \App\Erp\Support\DemoData::PREFIX }}</code> engagements is a worked
+                example, not real work. Clear it before the first real engagement is opened.
+            </p>
+            <form method="POST" action="{{ route('erp.demo.destroy') }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="erp__btn erp__btn--ghost">Clear the worked example</button>
+            </form>
+        </section>
+    @endif
+
     {{-- Reviews first: this is work already finished by somebody else and
          waiting on the person reading the page. --}}
     @if ($reviewQueue->isNotEmpty())
