@@ -28,7 +28,7 @@
                 <span><strong>Jiranisoko</strong> Delivery</span>
             </a>
 
-            @auth
+            @if (auth()->check() && auth()->user()->worksInDelivery())
                 <nav class="erp__nav" aria-label="Delivery">
                     <a href="{{ route('erp.dashboard') }}" @class(['erp__navlink', 'is-current' => request()->routeIs('erp.dashboard')])>My work</a>
                     <a href="{{ route('erp.projects.index') }}" @class(['erp__navlink', 'is-current' => request()->routeIs('erp.projects.*')])>Projects</a>
@@ -50,7 +50,7 @@
                         <button type="submit" class="erp__signout">Sign out</button>
                     </form>
                 </div>
-            @endauth
+            @endif
         </div>
     </header>
 

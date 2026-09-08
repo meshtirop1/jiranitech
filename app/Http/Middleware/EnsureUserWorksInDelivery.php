@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Erp\Support\LegacyRoles;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,10 @@ class EnsureUserWorksInDelivery
         if ($user === null) {
             return redirect()->route('erp.login');
         }
+
+        // The role rename's migration cannot be run on this host, so it happens
+        // here instead: one account, the first time it is used. See LegacyRoles.
+        LegacyRoles::heal($user);
 
         // A site administrator is not automatically an engineer. Access here is
         // granted by holding a delivery role, so that closing someone's ERP

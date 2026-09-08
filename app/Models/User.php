@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Erp\Casts\ErpRoleCast;
 use App\Erp\Enums\ErpRole;
 use App\Erp\Enums\TaskStatus;
 use App\Erp\Models\Project;
@@ -40,7 +41,7 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
             'is_active' => 'boolean',
             'last_login_at' => 'datetime',
-            'erp_role' => ErpRole::class,
+            'erp_role' => ErpRoleCast::class,
         ];
     }
 
