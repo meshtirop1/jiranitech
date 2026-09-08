@@ -18,6 +18,6 @@
             <button type="submit" class="erp__btn">Sign in</button>
         </form>
 
-        <p class="erp__muted erp__authnote">Accounts are created by the delivery director. There is no self-registration.</p>
+        <p class="erp__muted erp__authnote">Accounts are created by your team's leadership. There is no self-registration.</p>
     </div>
 </x-layouts.erp>

@@ -22,7 +22,7 @@ class EnsureUserWorksInDelivery
         abort_unless(
             $user->worksInDelivery(),
             403,
-            'This account has no delivery role. Ask the delivery director to enrol you.',
+            'This account has no delivery role. Ask your practice lead or a director to enrol you.',
         );
 
         return $next($request);

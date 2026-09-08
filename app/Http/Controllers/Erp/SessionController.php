@@ -41,7 +41,7 @@ class SessionController extends Controller
             $request->session()->invalidate();
 
             throw ValidationException::withMessages([
-                'email' => 'This account has no delivery role. Ask the delivery director to enrol you.',
+                'email' => 'This account has no delivery role. Ask your practice lead or a director to enrol you.',
             ]);
         }
 

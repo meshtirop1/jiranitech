@@ -20,9 +20,9 @@ use App\Models\User;
  *      does not get written, and then the person who wrote the code leaves.
  *
  *   2. Nobody may review their own work — including a lead. When the lead is the
- *      assignee the review escalates to another reviewer on the project or to the
- *      delivery director. This is the same separation of duties the company
- *      profile claims, applied to itself.
+ *      assignee the review escalates to another reviewer on the project or to
+ *      leadership. This is the same separation of duties the company profile
+ *      claims, applied to itself.
  *
  *   3. Blocking requires a reason. "Blocked" without a cause is invisible to the
  *      person who could clear it.
@@ -113,11 +113,11 @@ class TaskWorkflow
     private static function refuseReview(Task $task, User $actor, bool $isAssignee, bool $mayReview): ?string
     {
         if ($isAssignee) {
-            return 'You cannot review your own work. Ask another reviewer on this project, or the delivery director.';
+            return 'You cannot review your own work. Ask another reviewer on this project, or a director.';
         }
 
         if (! $mayReview) {
-            return 'Only a reviewer on this project, or the delivery director, can accept or reject this work.';
+            return 'Only a reviewer on this project, or leadership, can accept or reject this work.';
         }
 
         return null;

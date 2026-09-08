@@ -33,7 +33,7 @@ class ProjectController extends Controller
     {
         $user = $request->user();
         abort_unless($project->mayBeSeenBy($user), 403,
-            'You are not on this project. Ask the delivery director to add you.');
+            'You are not on this project. Ask the project lead or a director to add you.');
 
         $project->load(['members', 'tasks.assignee']);
 
