@@ -104,7 +104,7 @@ class User extends Authenticatable
      */
     public function reviewQueue(): Collection
     {
-        $projects = $this->erpRole()?->seesEverything()
+        $projects = $this->erpRole()?->reviewsAnywhere()
             ? Project::query()->pluck('id')
             : $this->projects()
                 ->wherePivotIn('role', ['lead', 'reviewer'])

@@ -112,7 +112,7 @@ class DeliveryAccessTest extends TestCase
             $this->actingAs($this->engineer())->get($url)->assertForbidden();
         }
 
-        $director = User::factory()->create(['erp_role' => ErpRole::Director, 'is_active' => true]);
+        $director = User::factory()->create(['erp_role' => ErpRole::DirectorOfDelivery, 'is_active' => true]);
 
         $this->actingAs($director)->get(route('erp.projects.create'))->assertOk();
         $this->actingAs($director)->get(route('erp.people.index'))->assertOk();
@@ -120,7 +120,7 @@ class DeliveryAccessTest extends TestCase
 
     public function test_only_the_project_lead_can_add_work(): void
     {
-        $lead = User::factory()->create(['erp_role' => ErpRole::Lead, 'is_active' => true]);
+        $lead = User::factory()->create(['erp_role' => ErpRole::PracticeLead, 'is_active' => true]);
         $project = $this->project($lead);
         $engineer = $this->engineer();
         $project->members()->attach($engineer->id, ['role' => ProjectRole::Engineer->value]);
@@ -140,7 +140,7 @@ class DeliveryAccessTest extends TestCase
 
     public function test_a_rejection_without_a_note_is_refused(): void
     {
-        $lead = User::factory()->create(['erp_role' => ErpRole::Lead, 'is_active' => true]);
+        $lead = User::factory()->create(['erp_role' => ErpRole::PracticeLead, 'is_active' => true]);
         $project = $this->project($lead);
         $engineer = $this->engineer();
         $project->members()->attach($engineer->id, ['role' => ProjectRole::Engineer->value]);
@@ -160,7 +160,7 @@ class DeliveryAccessTest extends TestCase
 
     public function test_a_refused_transition_reports_the_reason_rather_than_failing_silently(): void
     {
-        $lead = User::factory()->create(['erp_role' => ErpRole::Lead, 'is_active' => true]);
+        $lead = User::factory()->create(['erp_role' => ErpRole::PracticeLead, 'is_active' => true]);
         $project = $this->project($lead);
         $engineer = $this->engineer();
         $project->members()->attach($engineer->id, ['role' => ProjectRole::Engineer->value]);

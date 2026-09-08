@@ -33,7 +33,7 @@ class DeliverySeeder extends Seeder
             [
                 'name' => 'Managing Director',
                 'password' => $password,
-                'erp_role' => ErpRole::Director,
+                'erp_role' => ErpRole::ManagingDirector,
                 'job_title' => 'Managing Director',
                 'is_active' => true,
             ],
@@ -44,7 +44,7 @@ class DeliverySeeder extends Seeder
             [
                 'name' => 'Payments Practice Lead',
                 'password' => $password,
-                'erp_role' => ErpRole::Lead,
+                'erp_role' => ErpRole::PracticeLead,
                 'job_title' => 'Practice Lead — FinTech & Payments',
                 'is_active' => true,
             ],

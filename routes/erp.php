@@ -30,10 +30,15 @@ Route::middleware(['auth', 'delivery'])->group(function () {
 
     Route::get('/reviews', [Erp\ReviewController::class, 'index'])->name('reviews.index');
 
-    // Directing work: creating projects, tasks and enrolments.
+    // Opening an engagement is a directors' right.
     Route::middleware('delivery.director')->group(function () {
         Route::get('/projects-new', [Erp\ProjectController::class, 'create'])->name('projects.create');
         Route::post('/projects-new', [Erp\ProjectController::class, 'store'])->name('projects.store');
+    });
+
+    // Enrolling people is a leadership right, so a practice lead can staff their
+    // own discipline. Which posts each may create is enforced in the controller.
+    Route::middleware('delivery.enrol')->group(function () {
         Route::get('/people', [Erp\PeopleController::class, 'index'])->name('people.index');
         Route::post('/people', [Erp\PeopleController::class, 'store'])->name('people.store');
         Route::put('/people/{user}', [Erp\PeopleController::class, 'update'])->name('people.update');

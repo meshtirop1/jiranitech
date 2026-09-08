@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsDeliveryDirector;
+use App\Http\Middleware\EnsureUserMayEnrol;
 use App\Http\Middleware\EnsureUserWorksInDelivery;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -39,6 +40,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => EnsureUserIsAdmin::class,
             'delivery' => EnsureUserWorksInDelivery::class,
             'delivery.director' => EnsureUserIsDeliveryDirector::class,
+            'delivery.enrol' => EnsureUserMayEnrol::class,
         ]);
 
         /*

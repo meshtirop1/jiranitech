@@ -39,8 +39,8 @@ class DeliveryWorkflowTest extends TestCase
     {
         parent::setUp();
 
-        $this->director = User::factory()->create(['erp_role' => ErpRole::Director, 'is_active' => true]);
-        $this->lead = User::factory()->create(['erp_role' => ErpRole::Lead, 'is_active' => true]);
+        $this->director = User::factory()->create(['erp_role' => ErpRole::DirectorOfDelivery, 'is_active' => true]);
+        $this->lead = User::factory()->create(['erp_role' => ErpRole::PracticeLead, 'is_active' => true]);
         $this->engineer = User::factory()->create(['erp_role' => ErpRole::Engineer, 'is_active' => true]);
         $this->outsider = User::factory()->create(['erp_role' => ErpRole::Engineer, 'is_active' => true]);
 

@@ -29,7 +29,7 @@ class ErpRenderSnapshotTest extends TestCase
 
         $this->seed(DeliverySeeder::class);
 
-        $lead = User::query()->where('erp_role', ErpRole::Lead->value)->sole();
+        $lead = User::query()->where('erp_role', ErpRole::PracticeLead->value)->sole();
         $project = Project::query()->firstOrFail();
         $task = Task::query()->where('status', 'in_review')->firstOrFail();
 

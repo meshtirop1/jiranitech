@@ -87,12 +87,16 @@ class Project extends Model
      */
     public function mayBeReviewedBy(User $user): bool
     {
-        return (bool) $user->erpRole()?->seesEverything() || (bool) $this->roleOf($user)?->mayReview();
+        // Reviewing anywhere is a narrower right than seeing everywhere: the
+        // Data Protection Officer reads every engagement and reviews none of
+        // them, because the leadership page states the post is independent of
+        // delivery.
+        return (bool) $user->erpRole()?->reviewsAnywhere() || (bool) $this->roleOf($user)?->mayReview();
     }
 
     public function mayBeDirectedBy(User $user): bool
     {
-        return (bool) $user->erpRole()?->administersDelivery() || (bool) $this->roleOf($user)?->mayDirect();
+        return (bool) $user->erpRole()?->opensProjects() || (bool) $this->roleOf($user)?->mayDirect();
     }
 
     public function lead(): ?User

@@ -11,9 +11,9 @@ class EnsureUserIsDeliveryDirector
     public function handle(Request $request, Closure $next): Response
     {
         abort_unless(
-            (bool) $request->user()?->erpRole()?->administersDelivery(),
+            (bool) $request->user()?->erpRole()?->opensProjects(),
             403,
-            'Only the delivery director can open projects, enrol people or change roles.',
+            'Opening an engagement is reserved to the Managing Director, the Chief Technology Officer and the Director of Delivery.',
         );
 
         return $next($request);

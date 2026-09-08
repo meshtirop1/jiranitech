@@ -51,8 +51,13 @@ class ProjectController extends Controller
             'board' => $board,
             'mayDirect' => $project->mayBeDirectedBy($user),
             'mayReview' => $project->mayBeReviewedBy($user),
+            // Both gates apply: the project role must permit work, and so must
+            // the post. The Data Protection Officer passes the first and fails
+            // the second, which is the statutory independence the leadership
+            // page claims.
             'assignable' => $project->members->filter(
                 fn (User $u) => ProjectRole::from($u->pivot->role)->mayBeAssignedWork()
+                    && (bool) $u->erpRole()?->mayHoldWork()
             ),
             'candidates' => User::query()->inDelivery()
                 ->whereNotIn('id', $project->members->modelKeys())
