@@ -16,11 +16,21 @@
             <textarea id="summary" name="summary" rows="3">{{ old('summary') }}</textarea>
 
             <label for="lead_id">Lead engineer</label>
-            <select id="lead_id" name="lead_id" required>
-                @foreach ($people as $person)
-                    <option value="{{ $person->id }}" @selected(old('lead_id') == $person->id)>{{ $person->name }} — {{ $person->erpRole()?->label() }}</option>
-                @endforeach
-            </select>
+            @if ($people->isEmpty())
+                {{-- A project cannot be opened without somebody to accept work
+                     on it, so say so here rather than present a select with
+                     nothing in it attached to a form that will not submit. --}}
+                <p class="erp__empty">
+                    Nobody is enrolled yet. <a href="{{ route('erp.people.index') }}">Enrol the team</a>
+                    first — a project needs a lead who can accept work on it.
+                </p>
+            @else
+                <select id="lead_id" name="lead_id" required>
+                    @foreach ($people as $person)
+                        <option value="{{ $person->id }}" @selected(old('lead_id') == $person->id)>{{ $person->name }} — {{ $person->erpRole()?->label() }}</option>
+                    @endforeach
+                </select>
+            @endif
 
             <label for="status">Status</label>
             <select id="status" name="status" required>

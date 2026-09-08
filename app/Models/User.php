@@ -7,6 +7,7 @@ use App\Erp\Enums\ErpRole;
 use App\Erp\Enums\TaskStatus;
 use App\Erp\Models\Project;
 use App\Erp\Models\Task;
+use App\Erp\Support\FoundingPost;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -43,17 +44,34 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function booted(): void
+    {
+        // Who is in charge of delivery is derived from this table, so any write
+        // to it invalidates that answer for the rest of the request.
+        static::saved(fn () => FoundingPost::forget());
+        static::deleted(fn () => FoundingPost::forget());
+    }
+
     // --- delivery system ----------------------------------------------------
 
     public function erpRole(): ?ErpRole
     {
-        return $this->erp_role;
+        if ($this->erp_role !== null) {
+            return $this->erp_role;
+        }
+
+        // While the division has nobody in charge, the site administrator stands
+        // in as Managing Director so that the first leaders can be appointed at
+        // all. See FoundingPost: the loan lapses as soon as somebody holds a
+        // directing post.
+        return FoundingPost::heldBy($this) ? ErpRole::ManagingDirector : null;
     }
 
     /** Whether this account may sign in to the delivery system at all. */
     public function worksInDelivery(): bool
     {
-        return $this->erp_role !== null && $this->is_active;
+        return $this->is_active
+            && ($this->erp_role !== null || FoundingPost::heldBy($this));
     }
 
     public function projects(): BelongsToMany
