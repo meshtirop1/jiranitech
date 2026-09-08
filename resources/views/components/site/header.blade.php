@@ -23,13 +23,15 @@
 
 <header class="masthead" data-site-header>
     <div class="shell masthead__inner">
-        {{-- Mark plus wordmark on one line, the way devcom.com sets theirs. The
-             bars are the same three that make the favicon and the sharing card. --}}
+        {{-- Mark plus wordmark on one line, the way devcom.com sets theirs.
+
+             The J is the same geometry as favicon.svg and the sharing card, drawn
+             in currentColor so it takes the header's white. It replaced three
+             stacked bars which, at this size and beside the Menu button, read as a
+             hamburger icon rather than as a logo. --}}
         <a class="wordmark" href="{{ route('home') }}" aria-label="{{ config('company.legal_name') }} — home">
             <svg class="wordmark__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-                <rect x="18" y="16" width="18" height="7" fill="currentColor" opacity=".65"/>
-                <rect x="18" y="27" width="27" height="7" fill="currentColor"/>
-                <rect x="18" y="38" width="36" height="7" fill="currentColor"/>
+                <path d="M41 16 V34 A9 9 0 0 1 23 34" fill="none" stroke="currentColor" stroke-width="10"/>
             </svg>
             <span class="wordmark__primary">Jiranisoko</span>
             <span class="wordmark__secondary">Tech</span>

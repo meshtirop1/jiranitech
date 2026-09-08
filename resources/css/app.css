@@ -224,6 +224,7 @@ a:hover {
     max-width: none;
 }
 
+
 .display-2 {
     font-size: 36px;
     font-weight: 500;
@@ -355,7 +356,13 @@ a:hover {
     gap: 0.75rem;
 }
 
+/* WCAG 2.2 SC 2.5.8 wants 24px. The spacing exception covers links sitting
+   inside a sentence; these are standalone calls to action at the foot of a
+   card, so they have to make the target themselves. */
 .textlink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
     font-weight: 400;
     font-size: 14px;
     color: var(--cyan-deep);
@@ -404,6 +411,12 @@ a:hover {
     align-items: center;
 }
 
+.utility a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+}
+
 /* DevCom's header is cyan with white type across it, 70px tall, sticky. It is
    the loudest thing on their site and the thing you recognise it by. */
 .masthead {
@@ -434,8 +447,8 @@ a:hover {
 }
 
 .wordmark__mark {
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     flex: none;
     display: block;
     color: var(--white);
@@ -515,8 +528,24 @@ a:hover {
     flex: none;
 }
 
+/* Sits on the cyan bar, so it is drawn in white rather than inheriting the
+   ghost button's ink. At 1.45:1 it was invisible, and it is the only way into
+   the navigation on a phone. */
 .nav-toggle {
     display: none;
+}
+
+.nav-toggle.btn--ghost {
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    min-height: 40px;
+}
+
+.nav-toggle.btn--ghost:hover,
+.nav-toggle.btn--ghost[aria-expanded='true'] {
+    border-color: var(--white);
+    background: rgba(255, 255, 255, 0.14);
 }
 
 /* ---------------------------------------------------------- megamenu --- */
@@ -782,8 +811,12 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
+    /* The visual used to be ordered above the copy, which meant a phone opened
+       on a reference architecture diagram before it said who we are. The
+       headline leads; the diagram supports it. */
     .hero__visual {
-        order: -1;
+        order: 0;
+        margin-top: 1.5rem;
     }
 }
 
@@ -981,6 +1014,14 @@ a.cell:hover {
     padding-left: 1.1rem;
     position: relative;
     line-height: 20px;
+}
+
+.cell__list a,
+.panel__list a,
+.taglist a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
 }
 
 /* The cyan arrow DevCom puts in front of every list item. */
@@ -1440,6 +1481,9 @@ table.data td.num {
 }
 
 .footer__list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
     font-size: 14px;
     line-height: 20px;
     color: var(--ink);
@@ -2592,4 +2636,48 @@ table.data td.num {
     text-align: center;
     color: var(--muted);
     font-size: 0.9rem;
+}
+
+/* ====================================================== small screens === */
+
+/* Kept at the end of the stylesheet on purpose: these override component rules
+   that appear later in the file, and at equal specificity the last one wins. */
+@media (max-width: 700px) {
+    /* DevCom's 42px is a desktop measurement. Held to it, the homepage headline
+       runs to four lines on a 375px screen and the standfirst never reaches the
+       first screen at all. */
+    .display-1,
+    .pagehero h1 {
+        font-size: 30px;
+    }
+
+    .display-2,
+    .blockhead h2 {
+        font-size: 26px;
+    }
+
+    .pagehero {
+        min-height: 0;
+        padding-block: 44px;
+    }
+
+    .section {
+        padding-block: 40px;
+    }
+
+    .hero {
+        padding-block: 44px;
+    }
+
+    /* SC 2.5.8. These sit in rows rather than in a sentence, so the inline
+       exception does not cover them. */
+    .footer__legal a,
+    .crumbs a,
+    .crumbs li,
+    a.cell__title,
+    .cell__title a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+    }
 }
