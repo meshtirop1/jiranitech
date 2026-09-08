@@ -29,6 +29,16 @@ return [
         'name' => env('COMPANY_PARENT_NAME', 'Jiranisoko Market Ltd'),
         'url' => env('COMPANY_PARENT_URL'),
         'registration_number' => env('COMPANY_PARENT_REGISTRATION_NUMBER', 'PVT-YQ195JQY'),
+
+        /*
+        | KRA personal identification number, from the company's PIN certificate.
+        | It belongs to the holding company for the same reason the registration
+        | number does: this division is not a separate taxpayer. Kenyan procurement
+        | asks for it, so publishing it saves a round trip — but it is a setting,
+        | not a constant, and clearing it removes it from the footer.
+        */
+        'tax_pin' => env('COMPANY_PARENT_TAX_PIN'),
+
         'incorporated_on' => env('COMPANY_PARENT_INCORPORATED_ON', '2026-03-30'),
         'jurisdiction' => 'Republic of Kenya, Companies Act 2015',
     ],
@@ -46,7 +56,15 @@ return [
     // Kept for templates that only need the parent's display name.
     'parent_name' => env('COMPANY_PARENT_NAME', 'Jiranisoko Market Ltd'),
 
+    /*
+    | Street-level line only. The footer and the schema.org graph add the city and
+    | country from the two keys below, so putting them here as well would repeat
+    | them on the page and inside PostalAddress.
+    */
     'registered_address' => env('COMPANY_REGISTERED_ADDRESS'),
+
+    // Correspondence goes to the box, not the building.
+    'postal_address' => env('COMPANY_POSTAL_ADDRESS'),
 
     'city' => env('COMPANY_CITY', 'Eldoret'),
     'country' => env('COMPANY_COUNTRY', 'Kenya'),

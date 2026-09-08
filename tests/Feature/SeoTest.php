@@ -307,6 +307,11 @@ class SeoTest extends TestCase
     {
         $this->seed();
 
+        // The registered office is configured now (it came off the CR12), so this
+        // clears it first: what is under test is that an unset address produces no
+        // streetAddress rather than a guess, not whether one happens to be set.
+        config(['company.registered_address' => null]);
+
         $before = collect($this->jsonLd($this->get('/')))->firstWhere('@type', 'Organization');
 
         $this->assertArrayNotHasKey(

@@ -30,6 +30,9 @@
                         @else
                             <span class="pending">Gate G-07 — not configured</span>
                         @endif
+                        @if (config('company.parent.tax_pin'))
+                            &middot; KRA PIN {{ config('company.parent.tax_pin') }}
+                        @endif
                         <br>
                         <span class="muted small">{{ config('company.parent.jurisdiction') }}</span>
                     </p>
@@ -37,11 +40,19 @@
                     <p>
                         Registered office:
                         @if (config('company.registered_address'))
-                            {{ config('company.registered_address') }}
+                            {{ collect([
+                                config('company.registered_address'),
+                                config('company.city'),
+                                config('company.country'),
+                            ])->filter()->implode(', ') }}
                         @else
                             <span class="pending">Gate G-07 — not configured</span>
                         @endif
                     </p>
+
+                    @if (config('company.postal_address'))
+                        <p>Postal address: {{ config('company.postal_address') }}</p>
+                    @endif
 
                     <p>
                         @if (config('company.email.enquiries'))
