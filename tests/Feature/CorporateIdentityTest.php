@@ -35,11 +35,9 @@ class CorporateIdentityTest extends TestCase
         $footer->assertSee('Building 12, Soy-Kabenes Road, Eldoret West, Eldoret, Kenya');
         $footer->assertSee('P.O. Box 91-30105, Soy');
 
-        // The address and registration markers are gone. The enquiries marker is
-        // not — no corporate mailbox exists yet, and the registry's contact is a
-        // personal Gmail, which is not one.
-        $footer->assertDontSee('Gate G-07 — not configured');
-        $footer->assertSee('Gate G-07 — enquiries address not configured');
+        // Every G-07 marker is gone: the CR12 supplied the office and the number,
+        // and the role mailboxes supplied the contact route.
+        $footer->assertDontSee('Gate G-07');
     }
 
     public function test_registration_and_tax_numbers_are_attributed_to_the_holding_company(): void
@@ -67,22 +65,22 @@ class CorporateIdentityTest extends TestCase
         $this->assertSame('2026-03-30', config('company.parent.incorporated_on'));
     }
 
-    public function test_gate_g07_is_closed_once_the_address_and_a_contact_route_are_set(): void
+    public function test_gate_g07_names_whichever_part_is_missing(): void
     {
         $this->seed();
 
-        // The address is configured; the enquiries address is not, and G-07 counts
-        // it, so the gate is still open and still says which part is missing.
+        // Closed, now that the office, the number and a contact route are all set.
+        $this->assertTrue(collect(PublicationGates::all())->firstWhere('id', 'G-07')['closed']);
+
+        // Withdraw the contact route and the gate has to reopen and say so — the
+        // marker is what stops a half-configured identity shipping quietly.
+        config(['company.email.enquiries' => null]);
+
         $gate = collect(PublicationGates::all())->firstWhere('id', 'G-07');
 
         $this->assertFalse($gate['closed']);
         $this->assertStringContainsString('enquiries address', $gate['detail']);
         $this->assertStringNotContainsString('registered office', $gate['detail']);
-
-        Setting::put('company_email_enquiries', 'enquiries@jiranisoko.com');
-        SiteSettings::applyToConfig();
-
-        $this->assertTrue(collect(PublicationGates::all())->firstWhere('id', 'G-07')['closed']);
     }
 
     public function test_the_registered_office_reaches_the_structured_data(): void

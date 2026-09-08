@@ -39,6 +39,8 @@ class SiteSettings
         'company_email_enquiries' => 'company.email.enquiries',
         'company_email_rfp' => 'company.email.rfp',
         'company_email_security' => 'company.email.security',
+        'company_email_careers' => 'company.email.careers',
+        'company_email_privacy' => 'company.email.privacy',
         'company_telephone' => 'company.telephone',
         'company_client_portal_url' => 'company.client_portal_url',
         'company_response_acknowledgement' => 'company.response.acknowledgement',

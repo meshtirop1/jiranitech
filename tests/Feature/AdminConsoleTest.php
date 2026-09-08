@@ -208,6 +208,14 @@ class AdminConsoleTest extends TestCase
     {
         $this->seed();
 
+        // All three of G-07's conditions are configured now, so this clears them
+        // first: what is under test is that setting them closes the gate, not
+        // whether they happen to be set.
+        config([
+            'company.registered_address' => null,
+            'company.email.enquiries' => null,
+        ]);
+
         $this->assertFalse(collect(PublicationGates::all())->firstWhere('id', 'G-07')['closed']);
 
         Setting::put('company_registered_address', 'Kenyatta Street, Eldoret');

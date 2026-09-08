@@ -226,9 +226,10 @@
                                 </div>
                             </div>
 
-                            @if (config('company.email.enquiries'))
+                            @php($applyTo = config('company.email.careers') ?: config('company.email.enquiries'))
+                            @if ($applyTo)
                                 <p style="margin:.35rem 0 0">
-                                    <a class="textlink" href="mailto:{{ config('company.email.enquiries') }}?subject={{ rawurlencode('Application — '.$opening->title) }}">
+                                    <a class="textlink" href="mailto:{{ $applyTo }}?subject={{ rawurlencode('Application — '.$opening->title) }}">
                                         Apply for this role
                                     </a>
                                 </p>

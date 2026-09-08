@@ -54,6 +54,15 @@
                         <li style="font-size:.92rem;color:var(--ink-2)">Right to lodge a complaint with the Office of the Data Protection Commissioner</li>
                         <li style="font-size:.92rem;color:var(--ink-2)">Date of the notice and how changes are communicated</li>
                     </ul>
+
+                    @if (config('company.email.privacy'))
+                        <p class="prose-body" style="margin-top:1rem">
+                            Data-subject requests and questions about this notice go to
+                            <a class="textlink" href="mailto:{{ config('company.email.privacy') }}">{{ config('company.email.privacy') }}</a>.
+                            The route is open now; the drafted notice it belongs to is still
+                            with counsel.
+                        </p>
+                    @endif
                 </div>
             </div>
         </div>

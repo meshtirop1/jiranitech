@@ -71,10 +71,20 @@ return [
     'timezone_label' => 'EAT (UTC+3)',
     'office_hours' => '08:30–17:30 EAT, Monday to Friday',
 
+    /*
+    | Role addresses, not people. Every one is a shared mailbox so that a departure,
+    | a holiday or a reorganisation never orphans a thread — which is the whole
+    | reason procurement asks for role addresses rather than personal ones.
+    |
+    | security@ and abuse@ are the RFC 2142 names other operators look for, and
+    | security@ is the address the responsible-disclosure policy publishes.
+    */
     'email' => [
         'enquiries' => env('COMPANY_EMAIL_ENQUIRIES'),
         'rfp' => env('COMPANY_EMAIL_RFP'),
         'security' => env('COMPANY_EMAIL_SECURITY'),
+        'careers' => env('COMPANY_EMAIL_CAREERS'),
+        'privacy' => env('COMPANY_EMAIL_PRIVACY'),
     ],
 
     'telephone' => env('COMPANY_TELEPHONE'),
