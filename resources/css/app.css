@@ -1,7 +1,12 @@
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+
+/* The templates themselves, not the compiled-view cache. Scanning
+   storage/framework/views meant the stylesheet's contents depended on which
+   pages happened to have been rendered before the build: a cold cache silently
+   dropped ~9kB of utilities, including the ones Laravel's paginator needs. */
+@source '../views/**/*.blade.php';
 
 /* ==========================================================================
    Jiranisoko Tech Solutions — design system
@@ -2679,5 +2684,720 @@ table.data td.num {
         display: inline-flex;
         align-items: center;
         min-height: 24px;
+    }
+}
+
+/* ====================================================== delivery system === */
+
+/*
+   The ERP shares the site's tokens so the two cannot drift apart, but it is a
+   working tool rather than a document: denser, carrying more state, and using
+   colour to mean something rather than to decorate. Everything is scoped under
+   .erp so none of it can reach the public pages.
+
+   Tone is never decorative here. Attention (cyan) means something is waiting on
+   the person reading; negative (red) means something is stuck. A lead should be
+   able to read the page from across a room and know which projects need them.
+*/
+
+.erp {
+    background: var(--surface-2);
+    color: var(--ink);
+}
+
+.erp__bar {
+    background: var(--cyan-deep);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+.erp__barinner {
+    max-width: 1385px;
+    margin-inline: auto;
+    padding: 0 var(--gutter);
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.erp__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 16px;
+    flex: none;
+}
+
+.erp__mark:hover {
+    text-decoration: none;
+}
+
+.erp__mark svg {
+    width: 24px;
+    height: 24px;
+}
+
+.erp__nav {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: 1rem;
+    flex-wrap: wrap;
+}
+
+.erp__navlink {
+    color: rgba(255, 255, 255, 0.86);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 0.5rem 0.7rem;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 24px;
+}
+
+.erp__navlink:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+}
+
+.erp__navlink.is-current {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.erp__count {
+    background: var(--cyan);
+    color: var(--black);
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0 6px;
+    min-width: 18px;
+    text-align: center;
+}
+
+.erp__who {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: 13px;
+}
+
+.erp__who span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    text-align: right;
+}
+
+.erp__who em {
+    font-style: normal;
+    opacity: 0.75;
+    font-size: 12px;
+}
+
+.erp__signout {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    color: var(--white);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    padding: 5px 11px;
+    border-radius: 3px;
+    cursor: pointer;
+    min-height: 28px;
+}
+
+.erp__signout:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.erp__main {
+    padding-block: 28px 60px;
+}
+
+.erp__shell {
+    max-width: 1385px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+.erp__head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.erp__head h1 {
+    font-size: 26px;
+    line-height: 1.2;
+    margin: 0 0 4px;
+}
+
+.erp__sub {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    font-size: 14px;
+}
+
+.erp__stats {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.erp__stats b {
+    display: block;
+    font-size: 20px;
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.erp__crumbs {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 0.75rem;
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+/* --- panels --- */
+
+.erp__panel {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 18px 20px 20px;
+    margin-bottom: 18px;
+}
+
+.erp__panel--narrow {
+    max-width: 640px;
+}
+
+.erp__panel h2 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 10px;
+}
+
+/* The left edge carries the meaning. */
+.erp__panel--attention {
+    border-left: 3px solid var(--cyan);
+}
+
+.erp__panel--negative {
+    border-left: 3px solid var(--negative);
+}
+
+.erp__split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 18px;
+    align-items: start;
+}
+
+@media (max-width: 980px) {
+    .erp__split {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- tables --- */
+
+.erp__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.erp__table th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 0 10px 7px 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.erp__table td {
+    padding: 9px 10px 9px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+
+.erp__table tr:last-child td {
+    border-bottom: 0;
+}
+
+/* Links in a table read as ink — unless they are buttons. Without the :not()
+   this rule outranks .erp__btn on specificity and paints the label #4E4E4E on
+   the cyan fill, which is invisible rather than merely wrong. */
+.erp__table a:not(.erp__btn) {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.erp__table a:not(.erp__btn):hover {
+    color: var(--cyan-deep);
+    text-decoration: underline;
+}
+
+.erp__table code {
+    color: var(--cyan-deep);
+    font-size: 13px;
+    margin-right: 0.35rem;
+}
+
+.erp__cellright {
+    text-align: right;
+}
+
+/* --- cards and progress --- */
+
+.erp__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.erp__card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 16px 18px 18px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.erp__card:hover {
+    border-color: var(--cyan);
+    text-decoration: none;
+}
+
+.erp__card h3 {
+    font-size: 16px;
+    margin: 2px 0 2px;
+}
+
+.erp__code {
+    font-size: 12px;
+    color: var(--cyan-deep);
+    font-weight: 700;
+}
+
+.erp__meter {
+    height: 6px;
+    background: var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.erp__meter--wide {
+    height: 10px;
+    margin: 4px 0 6px;
+}
+
+.erp__meter span {
+    display: block;
+    height: 100%;
+    background: var(--cyan);
+}
+
+.erp__metertext {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 6px 0 0;
+    font-size: 13px;
+}
+
+/* --- chips --- */
+
+.erp__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0 0;
+}
+
+.erp__chip {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid;
+    white-space: nowrap;
+}
+
+.erp__chip--neutral {
+    color: var(--ink);
+    border-color: var(--rule-strong);
+    background: var(--surface-2);
+}
+
+.erp__chip--attention {
+    color: var(--cyan-deep);
+    border-color: var(--cyan);
+    background: var(--cyan-soft);
+}
+
+.erp__chip--positive {
+    color: var(--positive);
+    border-color: var(--positive);
+    background: var(--positive-soft);
+}
+
+.erp__chip--negative {
+    color: var(--negative);
+    border-color: var(--negative);
+    background: var(--negative-soft);
+}
+
+.erp__chip--muted {
+    color: var(--muted);
+    border-color: var(--rule-strong);
+    background: var(--surface-2);
+}
+
+/* --- text --- */
+
+.erp__muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.erp__overdue {
+    color: var(--negative);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.erp__empty {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0;
+}
+
+.erp__prose {
+    font-size: 14px;
+    line-height: 21px;
+    margin: 0;
+    max-width: 78ch;
+}
+
+.erp__note {
+    background: var(--cyan-soft);
+    border-left: 3px solid var(--cyan);
+    padding: 11px 14px;
+    font-size: 14px;
+    margin: 0 0 18px;
+}
+
+.erp__flash {
+    background: var(--positive-soft);
+    border-left: 3px solid var(--positive);
+    color: var(--positive);
+    padding: 11px 14px;
+    font-size: 14px;
+    margin: 0 0 18px;
+}
+
+.erp__errors {
+    background: var(--negative-soft);
+    border-left: 3px solid var(--negative);
+    padding: 11px 14px;
+    font-size: 14px;
+    margin: 0 0 18px;
+}
+
+.erp__errors ul {
+    margin: 4px 0 0;
+    padding-left: 1.1rem;
+}
+
+.erp__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.erp__list li {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.erp__list em {
+    font-style: normal;
+    color: var(--negative);
+    font-size: 13px;
+}
+
+.erp__list--plain li {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.erp__dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 7px 12px;
+    font-size: 13px;
+}
+
+.erp__dl dt {
+    color: var(--muted);
+}
+
+.erp__dl dd {
+    margin: 0;
+    word-break: break-word;
+}
+
+.erp__review {
+    padding: 11px 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.erp__review:last-of-type {
+    border-bottom: 0;
+}
+
+.erp__review p {
+    margin: 0 0 4px;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.erp__trail {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    font-size: 13px;
+}
+
+.erp__trail li {
+    display: flex;
+    flex-direction: column;
+    padding-left: 12px;
+    border-left: 2px solid var(--rule);
+}
+
+.erp__trail em {
+    font-style: normal;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* --- forms --- */
+
+.erp__form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 12px;
+}
+
+.erp__form--tight {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 4px;
+}
+
+.erp__form label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+}
+
+.erp__form input,
+.erp__form select,
+.erp__form textarea {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    padding: 8px 10px;
+    border: 1px solid var(--field-border);
+    border-radius: 2px;
+    background: var(--surface);
+    color: var(--ink);
+    width: 100%;
+}
+
+.erp__form textarea {
+    resize: vertical;
+    line-height: 20px;
+}
+
+.erp__formrow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.erp__check {
+    flex-direction: row !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: none !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    color: var(--ink) !important;
+}
+
+.erp__check input {
+    width: auto;
+}
+
+.erp__inlineform {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.erp__inlineform select {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    padding: 5px 7px;
+    border: 1px solid var(--field-border);
+    border-radius: 2px;
+    background: var(--surface);
+}
+
+.erp__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cyan-deep);
+    color: var(--white);
+    border: 1px solid var(--cyan-deep);
+    border-radius: 3px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    padding: 8px 17px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 10px;
+    min-height: 34px;
+}
+
+.erp__btn:hover {
+    background: #0a5b7a;
+    border-color: #0a5b7a;
+    text-decoration: none;
+    color: var(--white);
+}
+
+.erp__btn--sm {
+    font-size: 13px;
+    padding: 4px 11px;
+    margin-top: 0;
+    min-height: 26px;
+}
+
+.erp__btn--ghost {
+    background: transparent;
+    color: var(--cyan-deep);
+}
+
+.erp__btn--ghost:hover {
+    background: var(--cyan-soft);
+    color: var(--cyan-deep);
+}
+
+.erp__btn--positive {
+    background: var(--positive);
+    border-color: var(--positive);
+}
+
+.erp__btn--positive:hover {
+    background: #1b6420;
+    border-color: #1b6420;
+}
+
+.erp__btn--negative {
+    background: var(--negative);
+    border-color: var(--negative);
+}
+
+.erp__btn--negative:hover {
+    background: #a82020;
+    border-color: #a82020;
+}
+
+.erp__auth {
+    max-width: 380px;
+    margin: 6vh auto 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 26px 26px 28px;
+}
+
+.erp__auth h1 {
+    font-size: 20px;
+    margin: 0 0 2px;
+}
+
+.erp__authnote {
+    margin-top: 14px;
+}
+
+@media (max-width: 700px) {
+    .erp__barinner {
+        flex-wrap: wrap;
+        padding-block: 8px;
+    }
+
+    .erp__who {
+        width: 100%;
+        justify-content: space-between;
+        margin-left: 0;
+    }
+
+    .erp__formrow {
+        grid-template-columns: 1fr;
+    }
+
+    .erp__stats {
+        gap: 1rem;
     }
 }
