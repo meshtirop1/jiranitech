@@ -23,10 +23,16 @@
 
 <header class="masthead" data-site-header>
     <div class="shell masthead__inner">
+        {{-- Mark plus wordmark on one line, the way devcom.com sets theirs. The
+             bars are the same three that make the favicon and the sharing card. --}}
         <a class="wordmark" href="{{ route('home') }}" aria-label="{{ config('company.legal_name') }} — home">
-            <span class="wordmark__primary">JIRANISOKO</span>
-            <span class="wordmark__rule" aria-hidden="true"></span>
-            <span class="wordmark__secondary">Tech<br>Solutions</span>
+            <svg class="wordmark__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <rect x="18" y="16" width="18" height="7" fill="currentColor" opacity=".65"/>
+                <rect x="18" y="27" width="27" height="7" fill="currentColor"/>
+                <rect x="18" y="38" width="36" height="7" fill="currentColor"/>
+            </svg>
+            <span class="wordmark__primary">Jiranisoko</span>
+            <span class="wordmark__secondary">Tech</span>
         </a>
 
         <nav class="nav" aria-label="Primary">
