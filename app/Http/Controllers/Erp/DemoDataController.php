@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Erp;
 
+use App\Erp\Models\Project;
 use App\Erp\Support\DemoData;
-use App\Erp\Support\FoundingPost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,36 +15,46 @@ use Illuminate\Http\Request;
  * a command line is a seeder that can never be run here. Putting it behind a
  * button is not a convenience, it is the only route there is.
  *
- * What keeps that safe is when it is reachable. Planting is offered only to
- * somebody holding the founding post, which by definition means the division is
- * empty and the account is the site administrator standing in. The moment the
- * example is planted it has a Managing Director in it, the founding post lapses,
- * and this route refuses everyone — including the account that just used it.
- * It cannot be called twice and cannot be called on a division doing real work.
+ * What keeps that safe is when it is reachable: only into a delivery system that
+ * holds no engagements at all, and only for somebody who could open one. The
+ * example plants three, so the door shuts behind it and cannot be opened again
+ * until they are cleared. There is no state in which this can touch real work,
+ * because real work means there is an engagement, and an engagement means this
+ * refuses.
  */
 class DemoDataController extends Controller
 {
     public function store(Request $request): RedirectResponse
     {
+        $actor = $request->user();
+
         abort_unless(
-            FoundingPost::heldBy($request->user()),
+            (bool) $actor->erpRole()?->opensProjects(),
             403,
-            'The worked example can only be loaded into an empty division.',
+            'Loading the worked example is reserved to the posts that may open an engagement.',
         );
 
-        abort_if(DemoData::exists(), 409, 'The worked example is already loaded.');
+        abort_if(
+            Project::query()->exists(),
+            409,
+            'The worked example only goes into a delivery system with no engagements in it.',
+        );
 
         DemoData::plant();
 
-        // Planting appoints a Managing Director, so the founding post has just
-        // lapsed and this session no longer reaches delivery. Send them to the
-        // sign-in page with the credentials rather than into a refusal.
-        return redirect()->route('erp.login')->with('status', sprintf(
-            'Worked example loaded. Sign in as md@%s — every demonstration account uses the '
-            .'password %s. The full roll is on the People page once you are in.',
+        $credentials = sprintf(
+            'Worked example loaded: three engagements and thirteen accounts. Sign in as md@%s — '
+            .'every demonstration account takes the password %s.',
             DemoData::DOMAIN,
             DemoData::PASSWORD,
-        ));
+        );
+
+        // An administrator who was only standing in has just handed the division
+        // over to the Managing Director this planted, so they no longer reach
+        // delivery. Send them to the sign-in page rather than into a refusal.
+        return $actor->fresh()->worksInDelivery()
+            ? redirect()->route('erp.people.index')->with('status', $credentials)
+            : redirect()->route('erp.login')->with('status', $credentials);
     }
 
     public function destroy(Request $request): RedirectResponse

@@ -108,6 +108,35 @@ class DemoDataTest extends TestCase
         $this->assertFalse(DemoData::exists());
     }
 
+    public function test_a_director_who_is_not_standing_in_may_also_load_it(): void
+    {
+        // The account that hit this in production held a real directing post,
+        // not the founding loan, and had no way to reach the button.
+        $director = User::factory()->create(['erp_role' => ErpRole::DirectorOfDelivery, 'is_active' => true]);
+
+        $this->actingAs($director)
+            ->post(route('erp.demo.store'))
+            ->assertRedirect(route('erp.people.index'));
+
+        $this->assertTrue(DemoData::exists());
+    }
+
+    public function test_it_refuses_once_any_engagement_exists(): void
+    {
+        $director = User::factory()->create(['erp_role' => ErpRole::DirectorOfDelivery, 'is_active' => true]);
+
+        Project::create([
+            'code' => 'JTS-P-001', 'name' => 'Real work', 'slug' => 'real-work',
+            'status' => 'active', 'default_branch' => 'main',
+        ]);
+
+        $this->actingAs($director)
+            ->post(route('erp.demo.store'))
+            ->assertStatus(409);
+
+        $this->assertFalse(DemoData::exists());
+    }
+
     public function test_an_engineer_cannot_load_it(): void
     {
         $this->actingAs(User::factory()->create(['erp_role' => ErpRole::Engineer, 'is_active' => true]))

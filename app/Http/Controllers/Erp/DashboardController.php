@@ -6,7 +6,6 @@ use App\Erp\Enums\TaskStatus;
 use App\Erp\Models\Project;
 use App\Erp\Models\Task;
 use App\Erp\Support\DemoData;
-use App\Erp\Support\FoundingPost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -52,8 +51,10 @@ class DashboardController extends Controller
                 ->orderBy('due_on')
                 ->get(),
             'runningCount' => $running->count(),
-            // Offered only into an empty division; see DemoDataController.
-            'mayPlantExample' => FoundingPost::heldBy($user) && ! DemoData::exists(),
+            // Only into a delivery system with no engagements; see DemoDataController.
+            'mayPlantExample' => $projects->isEmpty()
+                && (bool) $user->erpRole()?->opensProjects()
+                && ! Project::query()->exists(),
             'mayClearExample' => DemoData::exists() && (bool) $user->erpRole()?->opensProjects(),
         ]);
     }

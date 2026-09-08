@@ -17,14 +17,13 @@
     </div>
 
     @if ($mayPlantExample)
-        {{-- The division is empty and this account is standing in as its first
-             leader. An empty board shows none of the gates or the review traffic,
-             so offer a worked example to judge the workflow against. --}}
+        {{-- Nothing has been opened yet. An empty board shows none of the gates
+             or the review traffic, so offer a worked example to judge the
+             workflow against before real engagements go in. --}}
         <section class="erp__panel erp__panel--attention">
-            <h2>Nothing has been enrolled yet</h2>
+            <h2>No engagements yet</h2>
             <p class="erp__sub">
-                You are signed in as the standing-in Managing Director, which is what happens while
-                the division has nobody in charge of it. Two ways forward.
+                Nothing has been opened in the delivery system. Two ways forward.
             </p>
 
             <div class="erp__actions">
@@ -37,11 +36,11 @@
             </div>
 
             <p class="erp__muted">
-                The example plants three engagements, thirteen accounts covering every published post,
-                and tasks in each state, so the review gates and the progress arithmetic can be seen
-                running. It is marked as a demonstration throughout and can be cleared in one action.
-                Loading it appoints a Managing Director, which ends your standing-in access — you carry
-                on with the demonstration accounts.
+                The example plants three engagements, thirteen accounts covering every published
+                post, and tasks in each state, so the review gates and the progress arithmetic can
+                be seen running. It is marked as a demonstration throughout, can be cleared in one
+                action, and is only offered while there are no engagements at all — so it can never
+                land on top of real work.
             </p>
         </section>
     @endif
