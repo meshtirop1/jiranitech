@@ -2565,6 +2565,105 @@ table.data td.num {
 
 /* --------------------------------------------------------------- table --- */
 
+/* Tabs across the content types, an "add new" drawer that stays shut until it
+   is wanted, and a delete that has to be reached for rather than sat next to
+   Save. */
+
+.adm__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+}
+
+.adm__tab {
+    font-family: var(--font-sans);
+    font-size: 0.86rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.55rem 0.9rem;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+.adm__tab:hover {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.adm__tab.is-current {
+    color: var(--ink);
+    border-bottom-color: var(--pine);
+    font-weight: 700;
+}
+
+.adm__new > summary {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 0.9rem 1.1rem;
+    list-style: none;
+}
+
+.adm__new > summary::before {
+    content: "+";
+    display: inline-block;
+    width: 1.2rem;
+    color: var(--pine);
+    font-weight: 700;
+}
+
+.adm__new[open] > summary {
+    border-bottom: 1px solid var(--rule);
+}
+
+.adm__new > summary::-webkit-details-marker {
+    display: none;
+}
+
+.adm__meta {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0.15rem 0 0;
+}
+
+.adm__optional {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 0.4rem;
+    text-transform: none;
+}
+
+/* Sits directly under the panel it belongs to and reads as its footer, whether
+   the panel is a form (in which case this has to be a sibling, since forms do
+   not nest) or a plain block. */
+.adm__danger {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 0;
+    margin-top: -1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.7rem 1.1rem;
+    text-align: right;
+}
+
+.adm__panel + .adm__danger {
+    margin-top: -1.5rem;
+}
+
+.adm__empty {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding: 1.1rem;
+    margin: 0;
+}
+
 .adm__panel {
     background: var(--surface);
     border: 1px solid var(--rule);

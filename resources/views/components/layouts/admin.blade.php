@@ -23,6 +23,10 @@
             ['Vacancies', 'admin.jobs.index', null, false],
         ],
         'Content' => [
+            ['Pillars', 'admin.content.index', null, false, 'pillars'],
+            ['Services', 'admin.content.index', null, false, 'services'],
+            ['Industries', 'admin.content.index', null, false, 'industries'],
+            ['Engagement models', 'admin.content.index', null, false, 'engagement-models'],
             ['Insights', 'admin.insights.index', null, false],
         ],
         'Enquiries' => [
@@ -52,11 +56,13 @@
             @foreach ($nav as $group => $items)
                 <div class="adm__group">
                     <p class="adm__grouplabel">{{ $group }}</p>
-                    @foreach ($items as [$label, $route, $count, $alert])
+                    @foreach ($items as $item)
+                        @php([$label, $route, $count, $alert] = $item)
+                        @php($param = $item[4] ?? null)
                         <a
                             class="adm__link"
-                            href="{{ route($route) }}"
-                            @if (request()->routeIs($route)) aria-current="page" @endif
+                            href="{{ $param ? route($route, $param) : route($route) }}"
+                            @if ($param ? request()->routeIs($route) && request()->route('type') === $param : request()->routeIs($route)) aria-current="page" @endif
                         >
                             <span>{{ $label }}</span>
                             @if ($count)

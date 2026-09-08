@@ -40,4 +40,54 @@ class JobOpeningController extends Controller
             ? "“{$job->title}” is now advertised."
             : "“{$job->title}” withdrawn from the careers page.");
     }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:160', 'regex:/^[a-z0-9-]+$/', 'unique:job_openings,slug'],
+            'level' => ['required', 'string', 'max:120'],
+            'discipline' => ['nullable', 'string', 'max:160'],
+            'location' => ['required', 'string', 'max:160'],
+            'arrangement' => ['required', 'string', 'max:160'],
+            'summary' => ['required', 'string', 'max:2000'],
+            'responsibilities' => ['nullable', 'string', 'max:4000'],
+            'requirements' => ['nullable', 'string', 'max:4000'],
+            'sort_order' => ['nullable', 'integer', 'min:0'],
+        ]);
+
+        // Created unadvertised on purpose. Publishing is a separate, deliberate
+        // act, because advertising a role that is not open and funded wastes a
+        // candidate's time.
+        $job = JobOpening::create([
+            ...$validated,
+            'responsibilities' => $this->lines($validated['responsibilities'] ?? null),
+            'requirements' => $this->lines($validated['requirements'] ?? null),
+            'is_published' => false,
+            'posted_at' => null,
+            'sort_order' => $validated['sort_order'] ?? (JobOpening::max('sort_order') + 1),
+        ]);
+
+        return back()->with('status', "\u{201C}{$job->title}\u{201D} created, and held back until you publish it.");
+    }
+
+    public function destroy(JobOpening $job): RedirectResponse
+    {
+        $title = $job->title;
+        $job->delete();
+
+        return back()->with('status', "\u{201C}{$title}\u{201D} deleted.");
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function lines(?string $input): array
+    {
+        return collect(preg_split('/\r\n|\r|\n/', (string) $input))
+            ->map(fn (string $line) => trim($line))
+            ->filter()
+            ->values()
+            ->all();
+    }
 }

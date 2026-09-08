@@ -2,6 +2,50 @@
     title="Platforms"
     subtitle="Gate G-03. Scale figures are commercially sensitive, so they stay hidden until the group clears them in writing. The qualitative operator argument renders either way."
 >
+    <details class="adm__panel adm__new">
+        <summary>Add a platform</summary>
+
+        <form method="POST" action="{{ route('admin.platforms.store') }}">
+            @csrf
+            <div class="adm__row">
+                <div class="adm__grid">
+
+                    <div class="adm__field">
+                        <label for="new-ptitle">Title</label>
+                        <input type="text" id="new-ptitle" name="title" required>
+                    </div>
+                    <div class="adm__field">
+                        <label for="new-pslug">Slug</label>
+                        <input type="text" id="new-pslug" name="slug" required pattern="[a-z0-9-]+">
+                    </div>
+                    <div class="adm__field">
+                        <label for="new-since">Operating since <span class="adm__optional">optional</span></label>
+                        <input type="text" id="new-since" name="operating_since">
+                    </div>
+                    <div class="adm__field">
+                        <label for="new-purl">External URL <span class="adm__optional">optional</span></label>
+                        <input type="url" id="new-purl" name="external_url">
+                    </div>
+                    <div class="adm__field adm__field--wide">
+                        <label for="new-context">System context</label>
+                        <textarea id="new-context" name="system_context" required></textarea>
+                    </div>
+                    <div class="adm__field adm__field--wide">
+                        <label for="new-stack">Stack <span class="adm__optional">optional</span></label>
+                        <textarea id="new-stack" name="stack" rows="4"></textarea>
+                        <small>One per line.</small>
+                    </div>
+                    <p class="adm__meta adm__field--wide">
+                        Created without scale figures published. Add them and clear them for disclosure separately.
+                    </p>
+                </div>
+                <div class="adm__actions">
+                    <button type="submit" class="btn btn--primary btn--sm">Create</button>
+                </div>
+            </div>
+        </form>
+    </details>
+
     @foreach ($platforms as $platform)
         <form method="POST" action="{{ route('admin.platforms.update', $platform) }}" class="adm__panel">
             @csrf
@@ -63,6 +107,13 @@
                     <button type="submit" class="btn btn--primary btn--sm">Save</button>
                 </div>
             </div>
+        </form>
+
+        <form method="POST" action="{{ route('admin.platforms.destroy', $platform) }}" class="adm__danger"
+              onsubmit="return confirm('Delete this record? Anything published from it disappears from the site.');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn--ghost btn--sm">Delete</button>
         </form>
     @endforeach
 </x-layouts.admin>

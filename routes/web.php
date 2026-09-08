@@ -106,14 +106,27 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/settings', [Admin\SettingsController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [Admin\SettingsController::class, 'update'])->name('settings.update');
 
+        // Pillars, services, industries and engagement models. One controller,
+        // because the only thing that differs between them is the field list.
+        Route::get('/content/{type}', [Admin\ContentController::class, 'index'])->name('content.index');
+        Route::post('/content/{type}', [Admin\ContentController::class, 'store'])->name('content.store');
+        Route::put('/content/{type}/{id}', [Admin\ContentController::class, 'update'])->name('content.update');
+        Route::delete('/content/{type}/{id}', [Admin\ContentController::class, 'destroy'])->name('content.destroy');
+
         Route::get('/metrics', [Admin\MetricController::class, 'index'])->name('metrics.index');
         Route::put('/metrics/{metric}', [Admin\MetricController::class, 'update'])->name('metrics.update');
+        Route::post('/metrics', [Admin\MetricController::class, 'store'])->name('metrics.store');
+        Route::delete('/metrics/{metric}', [Admin\MetricController::class, 'destroy'])->name('metrics.destroy');
 
         Route::get('/compliance', [Admin\ComplianceClaimController::class, 'index'])->name('compliance.index');
         Route::put('/compliance/{compliance}', [Admin\ComplianceClaimController::class, 'update'])->name('compliance.update');
+        Route::post('/compliance', [Admin\ComplianceClaimController::class, 'store'])->name('compliance.store');
+        Route::delete('/compliance/{compliance}', [Admin\ComplianceClaimController::class, 'destroy'])->name('compliance.destroy');
 
         Route::get('/platforms', [Admin\PlatformReferenceController::class, 'index'])->name('platforms.index');
         Route::put('/platforms/{platform}', [Admin\PlatformReferenceController::class, 'update'])->name('platforms.update');
+        Route::post('/platforms', [Admin\PlatformReferenceController::class, 'store'])->name('platforms.store');
+        Route::delete('/platforms/{platform}', [Admin\PlatformReferenceController::class, 'destroy'])->name('platforms.destroy');
 
         Route::get('/insights', [Admin\InsightController::class, 'index'])->name('insights.index');
         Route::get('/insights/create', [Admin\InsightController::class, 'create'])->name('insights.create');
@@ -124,9 +137,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/team', [Admin\TeamMemberController::class, 'index'])->name('team.index');
         Route::put('/team/{team}', [Admin\TeamMemberController::class, 'update'])->name('team.update');
+        Route::post('/team', [Admin\TeamMemberController::class, 'store'])->name('team.store');
+        Route::delete('/team/{team}', [Admin\TeamMemberController::class, 'destroy'])->name('team.destroy');
 
         Route::get('/jobs', [Admin\JobOpeningController::class, 'index'])->name('jobs.index');
         Route::put('/jobs/{job}', [Admin\JobOpeningController::class, 'update'])->name('jobs.update');
+        Route::post('/jobs', [Admin\JobOpeningController::class, 'store'])->name('jobs.store');
+        Route::delete('/jobs/{job}', [Admin\JobOpeningController::class, 'destroy'])->name('jobs.destroy');
 
         Route::get('/rfp', [Admin\RfpInboxController::class, 'index'])->name('rfp.index');
         Route::get('/rfp/{rfp}', [Admin\RfpInboxController::class, 'show'])->name('rfp.show');
