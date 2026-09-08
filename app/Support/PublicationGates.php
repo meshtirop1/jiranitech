@@ -151,11 +151,14 @@ class PublicationGates
     {
         return self::gate(
             'G-06',
-            'DPA and privacy notice drafted',
+            'Data protection instruments signed off',
             (bool) Setting::get('gate_g06_counsel_signed_off'),
             Setting::get('gate_g06_counsel_signed_off')
-                ? 'Counsel has signed off the data protection instruments.'
-                : 'Several pages state that a Data Processing Addendum governs processing. Until counsel drafts it, that claim is unsupported.',
+                ? 'Counsel and the Data Protection Officer have signed off the data protection instruments.'
+                : 'The addendum and its sub-processor register are drafted and published as a draft. The '
+                    .'privacy notice is not. Neither is executed: until counsel and the DPO record sign-off '
+                    .'here, the pages stating that a Data Processing Addendum governs processing are still '
+                    .'ahead of the instrument.',
             'Legal pages, governance',
             'admin.settings.edit',
             blocking: true,

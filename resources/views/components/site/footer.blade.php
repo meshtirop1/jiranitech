@@ -108,6 +108,7 @@
             <a href="{{ route('legal.privacy') }}">Privacy Notice</a>
             <a href="{{ route('legal.terms') }}">Terms of Engagement</a>
             <a href="{{ route('legal.data-processing') }}">Data Processing Addendum</a>
+            <a href="{{ route('legal.sub-processors') }}">Sub-processors</a>
             <a href="{{ route('legal.disclosure') }}">Responsible Disclosure</a>
             <a href="{{ route('legal.accessibility') }}">Accessibility Statement</a>
         </div>

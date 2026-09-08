@@ -1178,6 +1178,152 @@ table.data td.num {
     color: var(--cyan-deep);
 }
 
+/* --------------------------------------------------------- clauses --- */
+
+/* Numbered clauses for the legal instruments. The numbers come from counters
+   rather than being typed, so inserting a clause renumbers everything after it
+   and a cross-reference in the text can never quietly drift out of step with
+   the clause it points at. */
+
+.clauses {
+    counter-reset: clause;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.clause {
+    counter-increment: clause;
+    counter-reset: sub;
+}
+
+.clause > h3 {
+    font-family: var(--font-sans);
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+    padding-left: 2.6rem;
+    text-indent: -2.6rem;
+}
+
+.clause > h3::before {
+    content: counter(clause) ".";
+    display: inline-block;
+    width: 2.6rem;
+    text-indent: 0;
+    color: var(--cyan-deep);
+    font-variant-numeric: tabular-nums;
+}
+
+.clause > p,
+.clause > .clause__body {
+    margin: 0 0 0.75rem 2.6rem;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+}
+
+.clause ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.clause > ol > li {
+    counter-increment: sub;
+    padding-left: 2.6rem;
+    text-indent: -2.6rem;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+}
+
+.clause > ol > li::before {
+    content: counter(clause) "." counter(sub);
+    display: inline-block;
+    width: 2.6rem;
+    text-indent: 0;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Lettered sub-points inside a clause, for enumerations that are part of one
+   obligation rather than obligations in their own right. */
+.clause ol ol {
+    counter-reset: point;
+    margin: 0.55rem 0 0;
+    gap: 0.4rem;
+}
+
+.clause ol ol > li {
+    counter-increment: point;
+    padding-left: 2rem;
+    text-indent: -2rem;
+}
+
+.clause ol ol > li::before {
+    content: "(" counter(point, lower-alpha) ")";
+    display: inline-block;
+    width: 2rem;
+    text-indent: 0;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+}
+
+.clause strong {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+/* The signature block. Ruled lines a printed copy can actually be signed on. */
+
+.execution {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem 3rem;
+    border-top: 2px solid var(--ink);
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.execution__party > h4 {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+    margin: 0 0 1rem;
+}
+
+.execution__field {
+    border-bottom: 1px solid var(--ink-2);
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.4rem;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--muted);
+    min-height: 2.4rem;
+    display: flex;
+    align-items: flex-end;
+}
+
+@media print {
+    .execution {
+        break-inside: avoid;
+    }
+
+    .clause {
+        break-inside: avoid-page;
+    }
+}
+
 /* --------------------------------------------------------- taglist --- */
 
 .taglist {

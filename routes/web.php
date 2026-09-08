@@ -78,6 +78,7 @@ Route::prefix('legal')->name('legal.')->group(function () {
     Route::get('/privacy-notice', [LegalController::class, 'privacy'])->name('privacy');
     Route::get('/terms-of-engagement', [LegalController::class, 'terms'])->name('terms');
     Route::get('/data-processing-addendum', [LegalController::class, 'dataProcessing'])->name('data-processing');
+    Route::get('/sub-processors', [LegalController::class, 'subProcessors'])->name('sub-processors');
     Route::get('/responsible-disclosure', [LegalController::class, 'disclosure'])->name('disclosure');
     Route::get('/accessibility-statement', [LegalController::class, 'accessibility'])->name('accessibility');
 });

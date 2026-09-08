@@ -21,6 +21,15 @@ class LegalController extends Controller
         return view('legal.data-processing-addendum');
     }
 
+    /**
+     * Annex 3 to the addendum, published separately so that a change of
+     * sub-processor can be notified without reopening a signed instrument.
+     */
+    public function subProcessors(): View
+    {
+        return view('legal.sub-processors');
+    }
+
     public function disclosure(): View
     {
         return view('legal.responsible-disclosure');
