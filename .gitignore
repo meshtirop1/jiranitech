@@ -31,3 +31,8 @@ Thumbs.db
 # Local development database - never committed.
 database/*.sqlite
 database/*.sqlite-journal
+
+# Local tooling scratch directories. Named as a class rather than one by one,
+# so this does not have to be revisited for whatever the next editor is called.
+/.*/
+!/.github/

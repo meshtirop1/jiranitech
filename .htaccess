@@ -28,7 +28,8 @@
 # Directories that must never be web-readable.
 RedirectMatch 404 ^/(storage|bootstrap|config|database|resources|routes|tests|vendor|app|node_modules)(/|$)
 
-# Dotfiles and version control metadata.
-RedirectMatch 404 /\.(git|svn|hg|idea|vscode|claude)(/|$)
+# Dotfiles and dot-directories, as a class. Naming individual tools both dates
+# this file and misses whatever the next one is called.
+RedirectMatch 404 /\.[^/]+(/|$)
 
 Options -Indexes
