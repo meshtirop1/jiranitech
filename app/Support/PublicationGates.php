@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Enums\ComplianceStatus;
+use App\Enums\SlaTier;
 use App\Models\ComplianceClaim;
 use App\Models\Insight;
 use App\Models\JobOpening;
@@ -137,9 +138,10 @@ class PublicationGates
         return self::gate(
             'G-05',
             'SLA targets ratified',
-            (bool) Setting::get('gate_g05_ratified'),
-            Setting::get('gate_g05_ratified')
-                ? 'SLA tiers confirmed against the underlying provider SLAs.'
+            SlaTier::ratified(),
+            SlaTier::ratified()
+                ? 'Targets confirmed against the underlying provider service levels on '
+                    .SlaTier::ratifiedOn().'. The public table states them as commitments.'
                 : 'The tiers publish as a framework rather than as commitments. Check each target against the composite service level of the infrastructure underneath it, then ratify.',
             'Homepage, service pages, delivery model',
             'admin.sla.edit',

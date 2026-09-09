@@ -61,19 +61,17 @@ class SlaTierController extends Controller
 
         // Editing a target invalidates any previous ratification: the figures
         // that were confirmed are not the figures now published. Whoever owns
-        // that decision confirms the new ones.
-        $wasRatified = SlaTier::ratified();
-        $ratifying = $request->boolean('ratified');
-
-        if ($wasRatified && ! $ratifying) {
-            Setting::put('gate_g05_ratified', '', 'gates');
-        } elseif ($ratifying) {
-            Setting::put('gate_g05_ratified', '1', 'gates');
-        }
+        // that decision confirms the new ones, and the date they did it is what
+        // the site keys off — see SlaTier::ratified().
+        Setting::put(
+            'sla_ratified_on',
+            $request->boolean('ratified') ? now()->toDateString() : '',
+            'sla',
+        );
 
         Setting::flush();
 
-        return back()->with('status', $ratifying
+        return back()->with('status', $request->boolean('ratified')
             ? 'Service levels saved and ratified. The site may now quote them as commitments.'
             : 'Service levels saved. They are published as a framework until they are ratified.');
     }

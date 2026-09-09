@@ -54,10 +54,28 @@ enum SlaTier: string
         return (bool) config('sla.tiers.'.$this->value.'.service_credits', false);
     }
 
-    /** Whether the published targets have been confirmed as achievable and bound. */
+    /**
+     * Whether the published targets have been confirmed as achievable and bound.
+     *
+     * Keyed off the date the confirmation was given, not off the older boolean.
+     * That boolean was ticked when it only changed what the console reported
+     * about itself; it now decides whether the public table states that every
+     * target has been checked against the infrastructure underneath it, which is
+     * a much stronger claim than the one that was agreed to. A tick given for the
+     * old meaning does not carry over to the new one, so it is confirmed again on
+     * the Service levels screen, where what is being asserted is spelled out.
+     */
     public static function ratified(): bool
     {
-        return (bool) Setting::get('gate_g05_ratified');
+        return filled(Setting::get('sla_ratified_on'));
+    }
+
+    /** The date the current figures were confirmed, if they have been. */
+    public static function ratifiedOn(): ?string
+    {
+        $on = Setting::get('sla_ratified_on');
+
+        return filled($on) ? (string) $on : null;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Enums\SlaTier;
-use App\Models\Setting;
 use App\Models\User;
 use App\Support\PublicationGates;
 use App\Support\SiteSettings;
@@ -144,8 +143,6 @@ class ServiceLevelTest extends TestCase
         $this->actingAs($admin)->put(route('admin.sla.update'), $this->payload([
             'sla_platinum_availability_target' => '99.99%',
         ]));
-
-        Setting::flush();
 
         $this->assertFalse(SlaTier::ratified(), 'A new figure kept an old ratification.');
     }

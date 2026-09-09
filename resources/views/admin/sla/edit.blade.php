@@ -50,7 +50,9 @@
             <div class="adm__panelhead">
                 <div>
                     <h2>Gate G-05 — ratification</h2>
-                    <p class="adm__meta">{{ $ratified ? 'Ratified' : 'Not ratified' }}</p>
+                    <p class="adm__meta">
+                        {{ $ratified ? 'Ratified on '.\App\Enums\SlaTier::ratifiedOn() : 'Not ratified' }}
+                    </p>
                 </div>
             </div>
 
