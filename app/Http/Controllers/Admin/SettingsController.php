@@ -41,6 +41,8 @@ class SettingsController extends Controller
         'company_email_privacy' => ['Data protection address', 'The route for data-subject requests, published in the privacy notice.', 'email'],
         'company_telephone' => ['Telephone', '', 'text'],
         'company_client_portal_url' => ['Client portal URL', 'The portal link only appears in the utility bar once this is set.', 'url'],
+        'company_google_verification' => ['Google Search Console token', 'The content value from the "HTML tag" verification method — the token only, not the whole tag. It proves ownership; it does not track anyone, which is why it does not contradict the privacy notice.', 'text'],
+        'company_bing_verification' => ['Bing Webmaster token', 'The same thing for Bing. Optional; Bing can also import a verified Google property instead.', 'text'],
         'company_response_acknowledgement' => ['Acknowledgement time', 'A commercial promise. It appears in the RFP microcopy sitewide.', 'text'],
         'company_response_substantive' => ['Substantive reply time', 'A commercial promise. It appears in the hero and the RFP band.', 'text'],
     ];

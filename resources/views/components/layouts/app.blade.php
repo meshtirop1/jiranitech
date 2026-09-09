@@ -69,6 +69,16 @@
 
     <link rel="canonical" href="{{ $canonical }}">
 
+    {{-- Ownership tokens for the webmaster consoles. Neither sets a cookie nor
+         reports a visitor, which is what keeps the privacy notice's statement
+         that this site runs no analytics true. --}}
+    @if (config('company.verification.google'))
+        <meta name="google-site-verification" content="{{ config('company.verification.google') }}">
+    @endif
+    @if (config('company.verification.bing'))
+        <meta name="msvalidate.01" content="{{ config('company.verification.bing') }}">
+    @endif
+
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">

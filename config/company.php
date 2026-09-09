@@ -92,6 +92,20 @@ return [
     'client_portal_url' => env('COMPANY_CLIENT_PORTAL_URL'),
 
     /*
+    | Search engine ownership tokens.
+    |
+    | Verification is a claim of ownership, not tracking: the tag identifies the
+    | site to a webmaster console and sets no cookie, sends nothing to a third
+    | party and reports no visitor. That distinction matters here, because the
+    | privacy notice states plainly that this site runs no analytics, and it has
+    | to stay true.
+    */
+    'verification' => [
+        'google' => env('COMPANY_GOOGLE_VERIFICATION'),
+        'bing' => env('COMPANY_BING_VERIFICATION'),
+    ],
+
+    /*
     | Response commitments quoted in H-02 and H-11 microcopy. These are commercial
     | promises: change them here rather than in the templates so one edit governs
     | every place the site states them.
