@@ -9,9 +9,10 @@
 ])
 
 @php
-    $documentTitle = $title
-        ? $title.' — '.config('company.legal_name')
-        : config('company.legal_name').' — Enterprise Technology';
+    // Composed rather than concatenated: the brand suffix is dropped when it
+    // would push the title past what a search result renders. See Support\Seo.
+    $documentTitle = \App\Support\Seo::title($title);
+    $metaDescription = \App\Support\Seo::description($description);
 
     // Canonicals are pinned to the configured site URL, not to the request.
     // url()->current() echoes back whatever host and scheme the visitor arrived
@@ -22,9 +23,10 @@
 
     $socialImage = \App\Support\StructuredData::socialImage();
 
-    $graph = \App\Support\StructuredData::graph(
-        array_merge([\App\Support\StructuredData::organisation()], $schema)
-    );
+    $graph = \App\Support\StructuredData::graph(array_merge([
+        \App\Support\StructuredData::organisation(),
+        \App\Support\StructuredData::website(),
+    ], $schema));
 @endphp
 
 <!DOCTYPE html>
@@ -35,8 +37,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $documentTitle }}</title>
-    @if ($description)
-        <meta name="description" content="{{ $description }}">
+    @if ($metaDescription)
+        <meta name="description" content="{{ $metaDescription }}">
     @endif
 
     <meta name="robots" content="{{ $noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1' }}">
@@ -44,7 +46,7 @@
     <meta property="og:site_name" content="{{ config('company.legal_name') }}">
     <meta property="og:title" content="{{ $title ?? config('company.legal_name') }}">
     @if ($description)
-        <meta property="og:description" content="{{ $description }}">
+        <meta property="og:description" content="{{ $metaDescription }}">
     @endif
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_KE">
@@ -59,7 +61,7 @@
     <meta name="twitter:card" content="{{ $socialImage ? 'summary_large_image' : 'summary' }}">
     <meta name="twitter:title" content="{{ $title ?? config('company.legal_name') }}">
     @if ($description)
-        <meta name="twitter:description" content="{{ $description }}">
+        <meta name="twitter:description" content="{{ $metaDescription }}">
     @endif
     @if ($socialImage)
         <meta name="twitter:image" content="{{ $socialImage }}">

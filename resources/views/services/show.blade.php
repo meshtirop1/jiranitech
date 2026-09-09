@@ -8,8 +8,9 @@
 --}}
 
 <x-layouts.app
-    :title="$service->title"
-    :description="$service->meta_description ?? Str::limit($service->executive_summary, 300)"
+    :title="$service->meta_title ?: $service->title"
+    :description="$service->meta_description ?: $service->executive_summary"
+    :schema="[\App\Support\StructuredData::service($service, $pillar)]"
 >
     <x-site.page-header
         :eyebrow="'Pillar '.$pillar->reference().' — '.$pillar->nav_title"

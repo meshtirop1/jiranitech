@@ -73,6 +73,23 @@ class SeoTest extends TestCase
     /**
      * @return array<int, array<string, mixed>>
      */
+    /**
+     * The organisation node, whatever shape its @type takes.
+     *
+     * It carries two types — Organization and ProfessionalService — because both
+     * are true and the second is what a local search reads. schema.org allows an
+     * array there, so a lookup for the node cannot assume a string.
+     *
+     * @param  array<int, array<string, mixed>>  $nodes
+     * @return array<string, mixed>|null
+     */
+    private function organisationNode(array $nodes): ?array
+    {
+        return collect($nodes)->first(
+            fn (array $node) => in_array('Organization', (array) ($node['@type'] ?? []), true)
+        );
+    }
+
     private function jsonLd(TestResponse $response): array
     {
         preg_match_all(
@@ -278,7 +295,7 @@ class SeoTest extends TestCase
         foreach ($this->publicPages() as $path) {
             $nodes = $this->jsonLd($this->get($path)->assertOk());
 
-            $organisation = collect($nodes)->firstWhere('@type', 'Organization');
+            $organisation = $this->organisationNode($nodes);
 
             $this->assertNotNull($organisation, "No Organization node on {$path}");
             $this->assertSame(config('company.legal_name'), $organisation['name']);
@@ -312,7 +329,7 @@ class SeoTest extends TestCase
         // streetAddress rather than a guess, not whether one happens to be set.
         config(['company.registered_address' => null]);
 
-        $before = collect($this->jsonLd($this->get('/')))->firstWhere('@type', 'Organization');
+        $before = $this->organisationNode($this->jsonLd($this->get('/')));
 
         $this->assertArrayNotHasKey(
             'streetAddress',
@@ -323,7 +340,7 @@ class SeoTest extends TestCase
         Setting::put('company_registered_address', 'Kenyatta Street, Eldoret');
         SiteSettings::applyToConfig();
 
-        $after = collect($this->jsonLd($this->get('/')))->firstWhere('@type', 'Organization');
+        $after = $this->organisationNode($this->jsonLd($this->get('/')));
 
         $this->assertSame('Kenyatta Street, Eldoret', $after['address']['streetAddress']);
     }

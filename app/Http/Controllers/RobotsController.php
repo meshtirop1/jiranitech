@@ -30,6 +30,10 @@ class RobotsController extends Controller
             // named enquiry from an organisation that sent it to us in confidence.
             'Disallow: /contact/request-for-proposal/',
             '',
+            // Laravel's health endpoint. It answers 200 with no content a reader
+            // would want, so it is a thin page in an index and nothing else.
+            'Disallow: /up',
+            '',
             'Sitemap: '.StructuredData::canonical('sitemap.xml'),
             '',
         ];

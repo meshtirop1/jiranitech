@@ -4,6 +4,8 @@ namespace App\Support;
 
 use App\Models\Insight;
 use App\Models\JobOpening;
+use App\Models\Pillar;
+use App\Models\Service;
 use Illuminate\Support\Collection;
 
 /**
@@ -53,7 +55,10 @@ class StructuredData
     public static function organisation(): array
     {
         $node = [
-            '@type' => 'Organization',
+            // Both types are true and the second is what a local search reads:
+            // this is an organisation, and it is a professional services firm
+            // with a registered office somebody can be sent to.
+            '@type' => ['Organization', 'ProfessionalService'],
             '@id' => self::organisationId(),
             'name' => config('company.legal_name'),
             'url' => self::siteUrl().'/',
@@ -104,7 +109,78 @@ class StructuredData
             $node['contactPoint'] = [$contact];
         }
 
+        // Where the work is actually done. Stated because a Nairobi buyer
+        // searching for a supplier has no other way to learn it from the markup.
+        $node['areaServed'] = [
+            ['@type' => 'Country', 'name' => 'Kenya'],
+            ['@type' => 'Place', 'name' => 'East Africa'],
+        ];
+
+        $node['knowsLanguage'] = 'en';
+
+        if (filled($telephone = config('company.telephone'))) {
+            $node['telephone'] = $telephone;
+        }
+
         return $node;
+    }
+
+    /**
+     * The site itself, so a crawler has one node to attach the name and the
+     * publisher to rather than inferring both from the organisation.
+     *
+     * @return array<string, mixed>
+     */
+    public static function website(): array
+    {
+        return [
+            '@type' => 'WebSite',
+            '@id' => self::siteUrl().'/#website',
+            'url' => self::siteUrl().'/',
+            'name' => config('company.legal_name'),
+            'inLanguage' => 'en-KE',
+            'publisher' => ['@id' => self::organisationId()],
+        ];
+    }
+
+    /**
+     * One service, offered by this firm, in the discipline it belongs to.
+     *
+     * A services business whose service pages carry no Service node is asking a
+     * crawler to infer what is being sold from prose. serviceType is the phrase
+     * a buyer would search for, which is the page's own title rather than an
+     * invented keyword.
+     *
+     * @return array<string, mixed>
+     */
+    public static function service(Service $service, Pillar $pillar): array
+    {
+        return array_filter([
+            '@type' => 'Service',
+            '@id' => route('services.show', [$pillar, $service]).'#service',
+            'name' => $service->title,
+            'serviceType' => $service->title,
+            'description' => Seo::description($service->meta_description ?: $service->executive_summary),
+            'url' => route('services.show', [$pillar, $service]),
+            'category' => $pillar->title,
+            'provider' => ['@id' => self::organisationId()],
+            'areaServed' => [
+                ['@type' => 'Country', 'name' => 'Kenya'],
+                ['@type' => 'Place', 'name' => 'East Africa'],
+            ],
+            // The outcomes the page already lists, as the things this service
+            // produces. Omitted rather than faked where a service has none.
+            'hasOfferCatalog' => filled($service->outcomes ?? null) ? [
+                '@type' => 'OfferCatalog',
+                'name' => $service->title.' outcomes',
+                'itemListElement' => collect($service->outcomes)
+                    ->map(fn (string $outcome) => [
+                        '@type' => 'Offer',
+                        'itemOffered' => ['@type' => 'Service', 'name' => $outcome],
+                    ])
+                    ->all(),
+            ] : null,
+        ], fn ($value) => $value !== null && $value !== []);
     }
 
     /**
