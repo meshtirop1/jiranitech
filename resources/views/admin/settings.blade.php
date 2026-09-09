@@ -54,18 +54,10 @@
 
             <div class="adm__row">
                 <div class="adm__grid">
-                    <label class="adm__toggle adm__field--wide">
-                        <input type="checkbox" name="gate_g05_ratified" value="1" @checked(old('gate_g05_ratified', $gateG05))>
-                        <span>
-                            <b>G-05 — SLA targets ratified</b>
-                            <small>
-                                The published availability targets have been checked against the composite SLA
-                                of the underlying cloud providers and are contractually bound. Publishing a
-                                99.95% target on infrastructure that cannot compose to it creates an
-                                obligation you cannot meet.
-                            </small>
-                        </span>
-                    </label>
+                    <p class="adm__meta adm__field--wide">
+                        G-05, the ratification of the service level targets, is decided alongside the figures
+                        themselves on <a class="textlink" href="{{ route('admin.sla.edit') }}">Service levels</a>.
+                    </p>
 
                     <label class="adm__toggle adm__field--wide">
                         <input type="checkbox" name="gate_g06_counsel_signed_off" value="1" @checked(old('gate_g06_counsel_signed_off', $gateG06))>

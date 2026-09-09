@@ -42,14 +42,25 @@
 
 @if ($showNote)
     <div class="note" style="margin-top:1rem">
-        <span class="note__tag">How these are agreed</span>
-        <p>
-            The tiers describe the framework we contract within. The targets that bind us on your
-            engagement are the ones written into its statement of work, set against the composite
-            service levels of the infrastructure underneath it — we will not sign up to an availability
-            figure the platform below us cannot support. Where a tier carries service credits, clause 6
-            of the <a class="textlink" href="{{ route('legal.terms') }}">terms of engagement</a> sets
-            out how they are claimed and capped.
-        </p>
+        @if (\App\Enums\SlaTier::ratified())
+            <span class="note__tag">How these are agreed</span>
+            <p>
+                These targets are ratified: each has been checked against the composite service level of
+                the infrastructure it runs on. Your statement of work names the tier and carries the
+                figures. Where a tier includes service credits, clause 6 of the
+                <a class="textlink" href="{{ route('legal.terms') }}">terms of engagement</a> sets out how
+                they are claimed and capped.
+            </p>
+        @else
+            <span class="note__tag">How these are agreed</span>
+            <p>
+                The tiers describe the framework we contract within. The targets that bind us on your
+                engagement are the ones written into its statement of work, set against the composite
+                service levels of the infrastructure underneath it — we will not sign up to an availability
+                figure the platform below us cannot support. Where a tier carries service credits, clause 6
+                of the <a class="textlink" href="{{ route('legal.terms') }}">terms of engagement</a> sets
+                out how they are claimed and capped.
+            </p>
+        @endif
     </div>
 @endif

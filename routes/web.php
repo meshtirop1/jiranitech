@@ -106,6 +106,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/settings', [Admin\SettingsController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [Admin\SettingsController::class, 'update'])->name('settings.update');
 
+        Route::get('/service-levels', [Admin\SlaTierController::class, 'edit'])->name('sla.edit');
+        Route::put('/service-levels', [Admin\SlaTierController::class, 'update'])->name('sla.update');
+
         // Pillars, services, industries and engagement models. One controller,
         // because the only thing that differs between them is the field list.
         Route::get('/content/{type}', [Admin\ContentController::class, 'index'])->name('content.index');

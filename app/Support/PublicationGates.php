@@ -140,9 +140,9 @@ class PublicationGates
             (bool) Setting::get('gate_g05_ratified'),
             Setting::get('gate_g05_ratified')
                 ? 'SLA tiers confirmed against the underlying provider SLAs.'
-                : 'SLA tiers still render as a structural illustration. Confirm they are achievable on your cloud providers and contractually bound, then mark ratified.',
+                : 'The tiers publish as a framework rather than as commitments. Check each target against the composite service level of the infrastructure underneath it, then ratify.',
             'Homepage, service pages, delivery model',
-            'admin.settings.edit',
+            'admin.sla.edit',
             blocking: true,
         );
     }

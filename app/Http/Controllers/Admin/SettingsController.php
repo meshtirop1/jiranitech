@@ -81,7 +81,6 @@ class SettingsController extends Controller
             Setting::put($key, $value, 'company');
         }
 
-        Setting::put('gate_g05_ratified', $request->boolean('gate_g05_ratified') ? '1' : '', 'gates');
         Setting::put('gate_g06_counsel_signed_off', $request->boolean('gate_g06_counsel_signed_off') ? '1' : '', 'gates');
 
         return back()->with('status', 'Settings saved. They take effect across the site immediately.');

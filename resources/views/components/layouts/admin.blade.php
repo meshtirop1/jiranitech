@@ -16,6 +16,7 @@
         ],
         'Publication gates' => [
             ['Site settings', 'admin.settings.edit', null, false],
+            ['Service levels', 'admin.sla.edit', null, false],
             ['Metrics', 'admin.metrics.index', null, false],
             ['Compliance', 'admin.compliance.index', null, false],
             ['Platforms', 'admin.platforms.index', null, false],

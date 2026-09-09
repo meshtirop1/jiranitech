@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Enums\SlaTier;
 use App\Models\Setting;
 use Throwable;
 
@@ -48,6 +49,29 @@ class SiteSettings
     ];
 
     /**
+     * Service level tiers, built from the enum's own field list.
+     *
+     * Generated rather than typed out so a new field on a tier cannot be added
+     * to the form and then silently fail to persist.
+     *
+     * @return array<string, string>
+     */
+    public static function slaMap(): array
+    {
+        $map = [];
+
+        foreach (SlaTier::cases() as $tier) {
+            foreach (array_keys(SlaTier::fields()) as $field) {
+                $map['sla_'.$tier->value.'_'.$field] = 'sla.tiers.'.$tier->value.'.'.$field;
+            }
+
+            $map['sla_'.$tier->value.'_service_credits'] = 'sla.tiers.'.$tier->value.'.service_credits';
+        }
+
+        return $map;
+    }
+
+    /**
      * Wrapped defensively: this runs during `migrate` and `config:cache` too, when the
      * settings table may not exist yet, and a failure there must not break the console
      * that fixes it.
@@ -68,6 +92,18 @@ class SiteSettings
             if (filled($stored[$settingKey] ?? null)) {
                 config([$configKey => $stored[$settingKey]]);
             }
+        }
+
+        // Service credits are a yes/no, so "0" is a real answer rather than an
+        // absent one and cannot be filtered out with filled().
+        foreach (self::slaMap() as $settingKey => $configKey) {
+            if (! array_key_exists($settingKey, $stored)) {
+                continue;
+            }
+
+            config([$configKey => str_ends_with($settingKey, '_service_credits')
+                ? (bool) $stored[$settingKey]
+                : $stored[$settingKey]]);
         }
 
         // Two derived values have to be rebuilt after the parent name lands.
