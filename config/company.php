@@ -102,6 +102,7 @@ return [
     */
     'verification' => [
         'google' => env('COMPANY_GOOGLE_VERIFICATION'),
+        'google_file' => env('COMPANY_GOOGLE_VERIFICATION_FILE'),
         'bing' => env('COMPANY_BING_VERIFICATION'),
     ],
 

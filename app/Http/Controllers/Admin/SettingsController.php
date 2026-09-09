@@ -42,6 +42,7 @@ class SettingsController extends Controller
         'company_telephone' => ['Telephone', '', 'text'],
         'company_client_portal_url' => ['Client portal URL', 'The portal link only appears in the utility bar once this is set.', 'url'],
         'company_google_verification' => ['Google Search Console token', 'The content value from the "HTML tag" verification method — the token only, not the whole tag. It proves ownership; it does not track anyone, which is why it does not contradict the privacy notice.', 'text'],
+        'company_google_verification_file' => ['Google verification file name', 'If Google offered you the "HTML file" method instead, put the file name here — for example google1a2b3c4d5e.html. Nothing needs uploading: the site answers that address itself.', 'text'],
         'company_bing_verification' => ['Bing Webmaster token', 'The same thing for Bing. Optional; Bing can also import a verified Google property instead.', 'text'],
         'company_response_acknowledgement' => ['Acknowledgement time', 'A commercial promise. It appears in the RFP microcopy sitewide.', 'text'],
         'company_response_substantive' => ['Substantive reply time', 'A commercial promise. It appears in the hero and the RFP band.', 'text'],

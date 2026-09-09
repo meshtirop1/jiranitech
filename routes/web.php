@@ -14,6 +14,7 @@ use App\Http\Controllers\RfpSubmissionController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\SiteVerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -153,3 +154,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/rfp/{rfp}/acknowledge', [Admin\RfpInboxController::class, 'acknowledge'])->name('rfp.acknowledge');
     });
 });
+
+/*
+| Search console ownership, by the HTML file method.
+|
+| Last in the file and constrained to the shape Google issues, so it can shadow
+| nothing above it. See SiteVerificationController for why the file is answered
+| rather than stored.
+*/
+Route::get('/{file}', SiteVerificationController::class)
+    ->where('file', 'google[A-Za-z0-9_-]+\.html')
+    ->name('site.verification');

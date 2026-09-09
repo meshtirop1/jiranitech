@@ -45,6 +45,7 @@ class SiteSettings
         'company_telephone' => 'company.telephone',
         'company_client_portal_url' => 'company.client_portal_url',
         'company_google_verification' => 'company.verification.google',
+        'company_google_verification_file' => 'company.verification.google_file',
         'company_bing_verification' => 'company.verification.bing',
         'company_response_acknowledgement' => 'company.response.acknowledgement',
         'company_response_substantive' => 'company.response.substantive',
