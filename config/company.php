@@ -102,7 +102,11 @@ return [
     */
     'verification' => [
         'google' => env('COMPANY_GOOGLE_VERIFICATION'),
-        'google_file' => env('COMPANY_GOOGLE_VERIFICATION_FILE'),
+        // The name Google issued for this property. Not a secret — it is served
+        // publicly and is meant to be — so it sits here as the default rather
+        // than requiring a settings write on a host with no shell. Changing the
+        // property in Search Console changes this.
+        'google_file' => env('COMPANY_GOOGLE_VERIFICATION_FILE', 'google49be07f31877f1d8.html'),
         'bing' => env('COMPANY_BING_VERIFICATION'),
     ],
 

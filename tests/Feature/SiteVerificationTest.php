@@ -50,6 +50,20 @@ class SiteVerificationTest extends TestCase
         $this->get('/google1a2b3c4d5e6f.html')->assertNotFound();
     }
 
+    public function test_the_issued_file_for_this_property_answers_out_of_the_box(): void
+    {
+        // The name Google actually issued, carried in config so verification does
+        // not depend on a settings write. If this ever stops answering, the
+        // property silently loses its verification some weeks later.
+        $file = config('company.verification.google_file');
+
+        $this->assertNotEmpty($file, 'No verification file name is configured.');
+
+        $this->get('/'.$file)
+            ->assertOk()
+            ->assertSee("google-site-verification: {$file}", false);
+    }
+
     public function test_the_route_shadows_no_real_page(): void
     {
         // It sits last in the route file and matches only Google's own shape,
